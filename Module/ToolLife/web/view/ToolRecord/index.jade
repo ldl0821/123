@@ -1,0 +1,82 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet') 
+    link(type='text/css',href='./ToolLife/web/css/MachineTool.css',rel='stylesheet')
+    link(type='text/css',href='./ToolLife/web/css/jcallout.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/UI/Scripts/media/css/inbox.css',rel='stylesheet')
+    link(href='./ToolLife/web/css/sanjiliandong.css',type='text/css',rel='stylesheet')
+    style.
+        .form-horizontal .control-label{
+            width:126px;
+        }
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/moment.js')
+    script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+    script(type='text/javascript',src='./ToolLife/web/controller/sanjiliandong.js')
+    script(type='text/javascript',src='./ToolLife/web/controller/ToolRecordsController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='MeasureManager')
+                | 刀具履历
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 刀具寿命管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MeasureManager ') 刀具履历
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid(style='margin-left:10px;margin-top:5px;')
+                .span(style='width: 280px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:0px;width:50px') #{lang.Alarm.MachineGroup}
+                        input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+                .span(style='width: 300px !important;')
+                    .control-group(style='margin-bottom: 5px;position: relative;top:-5px')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;margin-top:6px;width:60px') #{lang.Alarm.MachineName}
+                        select(multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+                .span(style='width: 350px !important;margin-left:0px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;width:60px') #{lang.Alarm.MachineNo}
+                        input( id="my-selects"  class='selectpicker')
+        .row-fluid(style='margin-top:5px;margin-left:10px')
+                .span(style='')
+                    .control-group(style='margin-bottom: 5px;margin-left:-80px !important;')
+                        label.control-label 刀具编号
+                        .BZcontrols
+                            input#ToolNo.m-wrap(type='text', name='', style='width:200px;')
+                .span(style='')
+                    .control-group(style='margin-bottom: 5px;margin-left:-80px !important;')
+                        label.control-label 开始时间
+                        .BZcontrols
+                            input#startTime.m-wrap(type='text', name='', style='width:200px;')
+                .span(style='')
+                    .control-group(style='margin-bottom: 5px;margin-left:-80px !important;')
+                        label.control-label 结束时间
+                        .BZcontrols
+                            input#endTime.m-wrap(type='text', name='', style='width:200px;')
+                .span(style='width: 130px !important;')
+                    .control-group(style='margin-bottom: 5px;width:230px;')
+                        button#search.btn.green(style='margin-left: -20px;', type='button')
+                            | 查询
+                            i.icon-search
+    #grid(style='margin-top: 10px')
+    script#EXCEPT_LIFE2(type='text/x-kendo-template', style='margin-top: -200px;').
+            <div>#:(parseFloat(data.EXCEPT_LIFE)/3600).toFixed(2)#</div>
+    script#WARN_LIFE2(type='text/x-kendo-template', style='margin-top: -200px;').
+            <div>#:(parseFloat(data.WARN_LIFE)/3600).toFixed(2)#</div>
+    script#treeview-template(type='text/kendo-ui-template').
+            <i class="#:item.icon#"></i>
+            <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+
+
+
+
+
+

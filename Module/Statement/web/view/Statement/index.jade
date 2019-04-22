@@ -1,0 +1,73 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='../Statement/web/css/Statement.css',rel='stylesheet')
+    link(type='text/css',href='../Statement/web/css/jcallout.css',rel='stylesheet')
+    link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='../Statement/web/controller/echarts.common.min.js')
+    script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+    script(type='text/javascript',src='../Statement/web/controller/IndexClasses.js')
+    script(type='text/javascript',src='../Statement/web/controller/IndexDay.js')
+    script(type='text/javascript',src='../Statement/web/controller/StatementController.js')
+block content
+    .row-fluid
+        .span12
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.Statement.EquipmentDailyStandingMonitoring}
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            div.bothfloat
+                .span(style='width: 315px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                        input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+                .span(style='width: 350px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineName}
+                        select(multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+                .span(style='width: 314px !important;margin-left:0px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineNo}
+                        select(multiple  id="my-selects" data-live-search-placeholder="搜索"  title="" data-actions-box="true" class='selectpicker')
+                        
+                        //- input(type="text" id="MAC_NBRclient" name="MAC_NBRclient" class="span6 m-wrap")
+            div.bothfloat
+                .span(style='width:300px !important')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style="width:87px") #{lang.EmployeePerformance.StartTime}
+                        .BZcontrols
+                            input#startTime.m-wrap(type='text', name='startTime')
+                .span(style='padding-left:13px')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
+                        .BZcontrols
+                            input#endTime.m-wrap(type='text', name='endTime')
+                .span(style='position: relative;left:-80px')
+                    .control-group(style='margin-bottom: 10px;')
+                        label.control-label(data-lang='Common.PASSWORD') #{lang.Report.TypesOfQueries}
+                        .BZcontrols(style='line-height: 32px;')
+                        label.radio(style='margin: 5px 10px 0 10px !important;font-size: 12px;float:left;')
+                            input(type='radio', name='searchType', checked='', value='1')
+                            | #{lang.Statement.QueryByDay}
+                        label.radio(style='margin-top: 5px !important;font-size: 12px;float:left')
+                            input(type='radio', name='searchType', value='4')
+                            | #{lang.Statement.QueryByShift}
+                        label.radio(style='margin-top: 5px !important;font-size: 12px;float:left;margin-left:10px')
+                            input(type='radio', name='searchType', value='2')
+                            | #{lang.Statement.QueryUserDefinedTime}
+        button.btn.green(id='openExcel',style='margin-right:20px;margin-top:20px;float:right') #{lang.Statement.Export}
+                i.icon-share-alt  
+        button.btn.green(id='searchData',style='margin-right:20px;margin-top:20px;float:right') #{lang.Alarm.Search}
+                i.icon-search  
+        button.btn.purple(id='pucker',style='margin-right:20px;margin-top:20px;float:right') #{lang.Order.Folding}
+                i.icon-edit    
+    .pagination(style='margin-top:53px;')
+       
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>

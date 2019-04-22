@@ -1,0 +1,126 @@
+extends ../../../../../views/layout
+append headcss
+  link(type='text/css',href='../ReasonFeedback/web/css/AlarmReasonEnd.css',rel='stylesheet')
+append headjavascript
+  script(type='text/javascript',src='../ReasonFeedback/web/javascripts/dist.js')
+  script(type='text/javascript',src='../javascripts/UI/Scripts/knockout-3.1.0.js')
+  script(type='text/javascript',src='../ReasonFeedback/web/controller/AlarmReasonEndController.js')
+    
+block content
+    .row-fluid
+        .span12
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home} 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='StateTime') 停机报警完成列表
+    .row-fluid
+        #contentcontent
+            .control-group(style='height: 34px;')
+                .controls
+                    .input-icon.left(style='width: 250px; display: inline;')
+                        i.icon-search
+                        input#filter.m-wrap(type='text', placeholder='方案名称')
+            div
+                input(type="file" id="btn_file"  name="file[]" style="display:none")
+                #grid
+    //模板---------开关
+    script#template_STATE(type='text/x-kendo-template').
+      # if ( data.IS_FILE == 1) { #
+      <div><span>已上传文件</span></div>
+      # } else { #
+      <div><span>未上传文件</span></div>
+      # } #
+    script#template_FILE_NAME(type='text/x-kendo-template').
+        <div><a href='./ReasonFeedback/file/#:data.FILE_NAME#' download="">#:data.FILE_NAME#</a></div>
+    script#REPAIR_STATE(type='x-kendo-template').
+        # if ( data.STATE ==1) { #
+        <div><span>停机</span></div>
+        # } else if(data.STATE == 2) { #
+        <div><span>运行</span></div>
+        # } else if(data.STATE == 3) { #
+        <div><span>空闲</span></div>
+        # }else if(data.STATE == 4) { #
+        <div><span>关机</span></div>
+        # }else if(data.STATE == 5) { #
+        <div><span>调试</span></div>
+        # } #
+    script#URGENCY(type='x-kendo-template').
+        # if ( data.URGENCY ==0) { #
+        #{lang.Maintain.Emergency}
+        # } else if(data.URGENCY == 1) { #
+        #{lang.Maintain.Major}
+        # } else if(data.URGENCY == 2) { #
+        #{lang.Maintain.General}
+        # } #
+    script#MAC_NBR_NAME(type='x-kendo-template').
+        <div>#:data.CATEGORY# #:data.MAC_NAME# #:data.MAC_NO#</div>
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;padding-bottom:50px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+         #{lang.Maintain.FormRuleMsg}
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">#{lang.Maintain.MaintainFormGeneratorRule}</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.WordPrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.DatePrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.FigurePrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#popup-add(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="addviewmodel" style="min-width:750px;" autocomplete="off" >
+            <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>停机原因</label>
+                           <div class="controls">
+                              <input type="text" id="REASON" name="REASON" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+            </div>
+
+
+            <div class="form-actions">
+                <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+                <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+            </div>
+        </form>

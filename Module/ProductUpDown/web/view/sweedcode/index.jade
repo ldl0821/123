@@ -1,0 +1,111 @@
+﻿extends ../../../../../views/layout
+append headjavascript
+
+  script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+  script(type='text/javascript',src='./ProductUpDown/web/controller/sweedcodeController.js')
+  //- script(type='text/javascript',src='./Common/web/controller/accountController.js')
+  link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet') 
+  link(type='text/css',href='./ProductUpDown/web/css/account.css',rel='stylesheet')
+    
+block content
+  .row-fluid
+    .span12
+      h3.page-title(data-lang='AccountManage')
+        |扫码上线
+      ul.breadcrumb
+        li
+          i.icon-home
+          a(href='/') 主页
+          i.icon-angle-right
+        li
+          a(href='javascript:;', data-lang='System') 产品上下线
+          i.icon-angle-right
+        li
+          a(href='javascript:;', data-lang='AccountManage') 扫码上线
+  .row-fluid
+    table(width='100%', cellpadding='0', cellspacing='0')
+      tbody
+        tr
+          td(valign='top', style='padding-left:5px;')
+            .control-group(style='height: 80px;')
+              .controls
+                .input-icon.left(style='width: 250px; display: inline;')
+                .span(style='width: 315px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                        input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+                .span(style='width: 350px !important;')
+                    .control-group(style='margin-bottom: 5px;position: relative;top:-5px')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;margin-top:6px;') #{lang.Alarm.MachineName}
+                        select(multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+                .span(style='width: 314px !important;margin-left:0px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineNo}
+                        input( id="my-selects"  class='selectpicker')
+                button#search.btn.green(title='', switch")"='' style='margin-left:1px;margin-right:10px; margin-bottom:6px')
+                  | 查询
+                  i.icon-search
+              .controls(style='margin-top:7px')
+                label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px')  零件编号
+                  input#partno(type='text', placeholder='', common.user_name")"='' style='margin-left:10px;margin-bottom:6px; height:24px')
+                label.control-label(data-lang='Common.PASSWORD',style='margin-left:40px')  图纸编号
+                  input#drawingno(type='text', placeholder='', common.user_name")"='' style='margin-left:10px;margin-bottom:6px; height:24px')
+                label.control-label(data-lang='Common.PASSWORD',style='margin-left:74px')  
+                  <span style='float:left'>人员编号</span>
+                  input#staffInfo(type='text', placeholder='', common.user_name")"='' style='margin-left:10px;margin-bottom:6px;width:190px;height:24px')
+                button#addsweedcode.btn.blue(data-bind='click:AddSweedcode', title='', AddSweedcode")"='' style='margin-left:46px;margin-bottom:6px')
+                  | 上线
+                  i.icon-plus-sign 
+            #grid
+  script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+  script#popup-add(type='text/x-kendo-template').
+    <form id="signupForm" class="form-horizontal">
+    <div class="control-group">
+    <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>零件号(二维码)</label>
+    <div class="controls">
+    <input type="text" id="PART_NO" name="PART_NO" data-required="1" class="span6 m-wrap" />
+    </div>
+    </div>
+    <div class="control-group">
+    <label class="control-label" data-lang="Common.PASSWORD"><span class="required">*</span>设备</label>
+    <div class="controls">
+    <input type="text" id="MAC_NBR" name="MAC_NBR" data-required="1" class="span6 m-wrap" />
+    </div>
+    </div>
+    <div class="form-actions">
+    <div id="Win_Submit" class="btn green">确定<i class="icon-ok"></i></div>
+    <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+    </div>
+    </form>
+  script#popup-edit(type='text/x-kendo-template').
+    <form id="signupForm" class="form-horizontal">
+    <div class="control-group">
+    <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>"Common.USER_NAME"</label>
+    <div class="controls">
+    <input type="text" id="USER_NAME" name="USER_NAME" data-required="1" class="span6 m-wrap" />
+    </div>
+    </div>
+    <div class="control-group">
+    <label class="control-label"><span class="required">*</span>"Common.REF_NAME"</label>
+    <div class="controls">
+    <input type="text" id="COMBOX" name="COMBOX" data-required="1" class="span6 m-wrap" />
+    <br><span class="Memo">
+    "Common.MEMO_ACCOUNT"
+    </span>
+    </div>
+    </div>
+    <div class="control-group">
+    <label class="control-label">"Common.EXPIRED"</label>
+    <div class="controls">
+    <input id="EXPIRED" name="EXPIRED" type="text" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+    </div>
+    </div>
+    <div class="form-actions">
+    <div id="Win_Submit" class="btn green">"Common.OK"<i class="icon-ok"></i></div>
+    <div id="Win_Cancel" class="btn">"Common.CANCEL"<i class="icon-remove"></i></div>
+    </div>
+    </form>
+
+

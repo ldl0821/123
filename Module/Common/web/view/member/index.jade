@@ -1,0 +1,207 @@
+extends ../../../../../views/layout
+append headjavascript
+    script(type='text/javascript',src='./Common/web/controller/memberController.js')
+    script#treeview-template(type='text/x-kendo-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode">#:item.text#</span>
+
+    script#template_SEX(type='text/x-kendo-template').
+                | # if ( data.SEX == 1) { #
+                | #{lang.Common.Man}
+                | # } else { #
+                | #{lang.Common.Woman}
+                | # } #
+    script#detail-template(type='text/kendo-ui-template')
+        div
+            div(style='width: 120px; height: 90px; float: left; background-image: url(/images/people/NoDefault/#=PHOTO#); background-size: cover; background-position: center center; ')
+            .employee-details(style='float:left')
+                ul(style='margin: 0px;')
+                    li
+                        label #{lang.Common.Email}:
+                        | #= EMAIL #
+                    li
+                        label #{lang.Common.IdCard}:
+                        | #= IDENTITY_NO #
+                    li
+                        label #{lang.Common.Location}:
+                        | #= ADDRESS #
+
+
+append headcss
+    style(type='text/css').
+        .other {
+            display: none;
+        }
+
+        .employee-details ul {
+            list-style: none;
+            font-style: italic;
+            margin: 15px;
+            padding: 0;
+        }
+
+        .employee-details ul li {
+            margin: 0;
+            line-height: 1.7em;
+        }
+
+        .employee-details label {
+            display: inline-block;
+            width: 90px;
+            padding-right: 10px;
+            text-align: right;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | #{lang.Common.ManagementPersonnel}
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.Common.ManagementPersonnel}
+    .row-fluid
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(style='width: 280px;')
+                    .control-group
+                        .controls
+                            button#tree_add.btn.blue(data-bind='click:tree_add', title='@LanguageService.Translate(')
+                                | #{lang.EmployeePerformance.Add}
+                                i.icon-plus-sign
+                            button#tree_edit.btn.purple(data-bind='click:tree_edit', title='@LanguageService.Translate(')
+                                | #{lang.Order.Edit}
+                                i.icon-edit
+                            button#tree_delete.btn.red(data-bind='click:tree_delete', title='@LanguageService.Translate(')
+                                | #{lang.Order.Delete}
+                                i.icon-remove-sign
+                    table.table.table-bordered.table-condensed(style='border-color: #C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                        tr
+                            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                                a.k-link(tabindex='-1', href='#') #{lang.Common.PersonnelGroup}
+                                i#tree_expand.icon-sitemap(style='cursor: pointer; float: right; margin-top: 3px;')
+                        tr
+                            td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
+                                div(style='height: 424px; overflow-y: auto; padding-top: 5px; padding-left: 4px; padding-bottom: 5px;')
+                                    #orgnizetree
+                                    i#tree_addRootNode.icon-plus-sign(data-bind='click:tree_addRootNode', style='margin-left: 20px; font-size: 14px; display: none;')
+                td(valign='top', style='padding-left: 5px;')
+                    .control-group(style='height: 34px;')
+                        .controls
+                            .input-icon.left(style='width: 250px; display: inline;')
+                                i.icon-search
+                                input#filter.m-wrap(type='text', placeholder='#{lang.Common.StaffName}')
+                            button#grid_add.btn.blue(data-bind='click:grid_add', title='@LanguageService.Translate(')
+                                | #{lang.EmployeePerformance.Add}
+                                i.icon-plus-sign
+                            button#grid_delete.btn.red(data-bind='click:grid_delete', title='@LanguageService.Translate(')
+                                | #{lang.Order.Delete}
+                                i.icon-remove-sign
+                            button#grid_move.btn.green(data-bind='click:grid_move')
+                                | #{lang.Common.MoveGroup}
+                                i.icon-exchange
+                    #grid
+
+        script#popup-add(type='text/x-kendo-template')
+            form#memberviewmodel.form-horizontal(style='width:750px;')
+                .control-group
+                    label.control-label(data-lang='Common.USER_NAME')
+                        span.required *
+                        | #{lang.Common.StaffPhotos}
+                    .controls
+                        div
+                            input#PHOTO(type='text', data-bind='value:PHOTO', style='display:none;')
+                            #PHOTO_img.photo(style='width: 200px; height: 150px; display: inline-block;')
+                            #Gallery(style='display:none; overflow-y: auto; width: 320px; height: 150px; display: inline-block; border: 1px solid \#ddd;')
+                        span.btn.green.fileinput-button
+                            i.icon-plus.icon-white
+                            span #{lang.Common.Upload}
+                            input#fileupload(type='file', name='files[]')
+                        button#galleryshow.btn.blue.fileinput-button(data-bind='click:galleryshow')
+                            i.icon-inbox.icon-white
+                            span #{lang.Common.Gallery}
+                .control-group
+                    table
+                        tr
+                            td(width='354')
+                                label.control-label(data-lang='Common.MEMBER_NO')
+                                    span.required *
+                                    | #{lang.Common.PersonnelNumbers}
+                                .controls
+                                    input#MEMBER_NO.span6.m-wrap(type='text', name='MEMBER_NO', data-bind='value:MEMBER_NO')
+                            td
+                                label.control-label(data-lang='Common.MEM_NAME')
+                                    span.required *
+                                    | #{lang.Common.Name}
+                                .controls
+                                    input#MEM_NAME.span6.m-wrap(type='text', name='MEM_NAME', data-bind='value:MEM_NAME')
+                .control-group
+                    table
+                        tr
+                            td
+                                label.control-label(data-lang='Common.RANK_NUM') #{lang.Common.Sort}
+                                .controls
+                                    input#RANK_NUM.span6.m-wrap.rank-num(type='text', name='RANK_NUM', data-required='1', style='width: 214px; margin-left: 0px;')
+                            td
+                                label.control-label(data-lang='Common.TEL') #{lang.Common.Contact}
+                                .controls
+                                    input#TEL.span6.m-wrap(type='text', name='TEL', data-bind='value:TEL', data-required='1')
+                .control-group
+                    table
+                        tr
+                            td
+                                label.control-label(data-lang='Common.BIRTHDAY') #{lang.Common.BirthDate}
+                                .controls
+                                    input#BIRTHDAY.span6.m-wrap(type='text', name='BIRTHDAY', data-bind='value:BIRTHDAY', data-required='1', style='width: 214px; margin-left: 0px;')
+                            td
+                                label.control-label(data-lang='Common.SEX') #{lang.Common.Gender}
+                                .controls(style='line-height: 32px;')
+                                    label.radio(style='margin-top: 0px !important;font-size: 12px;')
+                                        input(type='radio', name='SEX', checked='', value='1')
+                                        | #{lang.Common.Man}
+                                    label.radio(style='margin-top: 0px !important;font-size: 12px;')
+                                        input(type='radio', name='SEX', value='2')
+                                        | #{lang.Common.Woman}
+                .control-group
+                    table
+                        tr
+                            td
+                                label.control-label(data-lang='Common.BORN_DATE') #{lang.Common.Email}
+                                .controls
+                                    input#EMAIL.span6.m-wrap(name='EMAIL', type='text', data-bind='value:EMAIL')
+                            td
+                                label.control-label(data-lang='Common.IDENTITY_NO') #{lang.Common.IdCard}
+                                .controls
+                                    input#IDENTITY_NO.span6.m-wrap(type='text', name='IDENTITY_NO', data-bind='value:IDENTITY_NO', data-required='1')
+                .control-group
+                    table
+                        tr
+                            td
+                                label.control-label(data-lang='Common.ADDRESS') #{lang.Common.Location}
+                                .controls
+                                    input#ADDRESS.span6.m-wrap(type='text', name='ADDRESS', data-bind='value:ADDRESS', data-required='1', style='width: 555px;')
+                            td
+                .form-actions
+                    button#btn_save.btn.green(data-bind='click:save' type='button')
+                        | #{lang.EmployeePerformance.OK}
+                        i.icon-ok
+                    button#Win_Cancel.btn
+                        | #{lang.EmployeePerformance.Cancel}
+                        i.icon-remove
+
+
+
+
+
+
+

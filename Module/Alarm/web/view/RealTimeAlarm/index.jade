@@ -1,0 +1,27 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Alarm/web/css/bootstrap-table.css',rel='stylesheet')
+    link(type='text/css',href='./Alarm/web/css/realTimeAlarm.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Alarm/web/js/bootstrap-table.js')
+    script(type='text/javascript',src='./Alarm/web/controller/realTimeAlarm.js')
+block content
+    .row-fluid
+        .span12 
+            h3.page-title(data-lang='AccountManage')
+                | #{lang.Alarm.Alarm} 
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home} 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.Alarm.RealTimeAlarm} 
+    div.box
+        div.alarm-box
+            .title #{lang.Alarm.Text_1}
+            .content
+            //- p ss
+            //- p dd
+        div.table-box
+            table#table

@@ -1,0 +1,154 @@
+extends ../../../../../views/layout
+append headcss
+  style(type='text/css').
+    .machineLabel {
+      width: 200px;
+      border-radius: 5px !important;
+      border: 2px solid;
+      display: inline-table;
+      margin: 0px 20px 20px 0px;
+      position:relative;
+    }
+    .machineLabel1 {
+      border-bottom: 1px solid;
+      /*background-color: ;*/
+      height: 52px;
+    }
+    .machineImage {
+      width: 60px;
+      height: 45px;
+      margin-left: 3px;
+      border-radius: 3px !important;
+      float: left;
+      margin-top: 3px;
+    }
+    .machineName {
+      color: rgb(255, 255, 255);
+      margin-left: 70px;
+      padding-top: 7px;
+    }
+    .machineName p:first-child {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    .machineName p:last-child {
+      font-size: 14px;
+      margin-bottom: 0px;
+      margin-left: 1px;
+    }
+    .machinePars {
+      height: 30px;
+      border-bottom: 1px dashed rgb(206, 206, 206);
+      display: table;
+      width: 100%;
+    }
+    .machinePars label {
+      width: 80px;
+      float: left;
+      text-align: right;
+      margin-bottom: 0px;
+      margin-top: 6px;
+    }
+    .machinePars div {
+      margin-left: 85px;
+      margin-top: 6px;
+    }
+    .machineView {
+      margin-left: 180px;
+      font-size: 16px;
+      margin-top: 2px;
+      padding-top: 0px;
+    }
+    #wrap {
+      *zoom: 1;
+    }
+    #sidebar {
+      float: left;
+      width: 300px;
+    }
+    #content {
+     margin-left: 305px;
+    }
+    .k-pager-wrap {
+     clear: none !important;
+    }
+    .machineLabelChild{
+      position: absolute;
+      display: flex;
+      top:0;
+      left:100%;
+      background:#fff;
+      color:#000;
+      z-index:10;
+      display:none;
+      -moz-box-shadow:1px 2px 5px #333333; 
+      -webkit-box-shadow:1px 2px 5px #333333;
+       box-shadow:1px 2px 5px #333333;
+    }
+    .ng-cloak{
+      display:none;
+    }
+    .machineLabelChild>div{
+      width:200px;
+      flex:1;
+    }
+
+block content
+  .row-fluid
+    .span12
+      ul.breadcrumb
+        li
+          i.icon-home
+          a(href='/') #{lang.EmployeePerformance.Home}
+          i.icon-angle-right
+        li
+          a(href='javascript:;', data-lang='AccountManage') #{lang.MachineParameters.EquipmentRealtimeStatusAndAssistanceInDiagnosis}
+  .row-fluid(ng-controller='appCtrl')
+    #wrap
+      #sidebar
+        #orgnizetree
+      #content
+        #status_list(style='margin-bottom:20px')
+          button.btn.red(ng-click='stop()') #{lang.Maintain.停机}
+          button.btn.green(ng-click='run()') #{lang.Maintain.运行}
+          button.btn.yellow(ng-click='idle()') #{lang.Maintain.空闲}
+          button.btn(style='background-color:gray',ng-click='shut()') #{lang.Maintain.关机}
+          button.btn.blue(ng-click='oper()') #{lang.Maintain.调试}
+          button.btn(ng-click='all()') #{lang.YieldProcessingBeat.All}
+        #grid(ng-cloak class="ng-cloak")
+          .machineLabel(ng-repeat='item in items_son', ng-style="{'border-color':item.color}")
+            .machineLabel1(ng-style="{'border-color':item.color,'background-color':item.color}")
+              img.machineImage(ng-src='{{item.photo}}')
+              .machineName
+                p
+                  | {{item.CATEGORY.length > 6 ? (item.CATEGORY.substring(0,5)+"..."):item.CATEGORY}}
+                p
+                  | NO:
+                  span {{item.CODE_NO}}
+            .machinePars
+              label #{lang.Order.DeviceName}:
+              div {{item.CATEGORY}}
+            .machinePars
+              label #{lang.Common.EquipmentModel}:
+              div {{item.MAC_NAME}}
+            .machinePars
+              label #{lang.Order.EquipmentSerialNumber}:
+              div {{item.MAC_NO}}
+            div(ng-repeat='par in item.parsAll')
+              .machinePars
+                label {{par.NAME}}:
+                div {{par.VALUE + " " + par.UNIT}}
+            .machineLabelChild
+              div(ng-repeat="a in item.pars")
+                  div(ng-repeat="par in a track by $index")
+                    .machinePars
+                      label {{par.NAME}}:
+                      div {{par.VALUE + " " + par.UNIT}}
+            .machineView
+              i.icon-circle-arrow-right(ng-click='showDetail(item.MAC_NBR)')
+
+ append headjavascript 
+    script(type='text/javascript',src='./MachineParameters/web/controller/pinganController.js')    
+    script#treeview-template(type='text/kendo-ui-template').
+      <i class="#:item.icon#"></i>
+      <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode">#:item.text#</span>

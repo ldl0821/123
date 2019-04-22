@@ -1,0 +1,201 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet') 
+    link(type='text/css',href='./ToolLife/web/css/MachineTool.css',rel='stylesheet')
+    link(type='text/css',href='./ToolLife/web/css/jcallout.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/UI/Scripts/media/css/inbox.css',rel='stylesheet')
+    link(href='./ToolLife/web/css/sanjiliandong.css',type='text/css',rel='stylesheet')
+    style.
+        .form-horizontal .control-label{
+            width:126px;
+        }
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/moment.js')
+    script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+    script(type='text/javascript',src='./ToolLife/web/controller/sanjiliandong.js')
+    script(type='text/javascript',src='./ToolLife/web/controller/ToolRolesController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='MeasureManager')
+                | 刀具规则
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 刀具寿命管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MeasureManager ') 刀具规则
+    form.form-horizontal(style='padding: 8px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid(style='margin-top:5px;display:none')
+            .span(style='width: 320px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:5px;width:80px') #{lang.Alarm.MachineGroup}
+                    input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+            .span(style='width: 300px !important;')
+                .control-group(style='margin-bottom: 5px;position: relative;top:-5px')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;margin-top:6px;width:60px') #{lang.Alarm.MachineName}
+                    select(multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+            .span(style='width: 350px !important;margin-left:0px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;width:60px') #{lang.Alarm.MachineNo}
+                    input( id="my-selects"  class='selectpicker')
+        .row-fluid
+                .span(style='')
+                    .control-group(style='margin-bottom: 5px;margin-left:-50px !important;')
+                        label.control-label 刀具编号
+                        .BZcontrols
+                            input#prodName.m-wrap(type='text', name='', style='width:200px;')
+                .span(style='')
+                    .control-group(style='margin-bottom: 5px;margin-left:-50px !important;')
+                        label.control-label 类型
+                        .BZcontrols
+                            select#R_TYPE(style="height:34px !important;width:207px;position:relative;left:8px;")
+                                option(value="") 
+                                option(value="1") 产量
+                                option(value="2") 用时
+                .span(style='width: 130px !important;')
+                    .control-group(style='margin-bottom: 5px;width:230px;')
+                        button#search.btn.green(style='margin-left: 50px;', type='button')
+                            | 查询
+                            i.icon-search
+                        button.btn.blue(style='margin-left: 10px;', onclick='add()', type='button')
+                            | 新增
+                            i.icon-plus-sign
+    #grid(style='margin-top: 10px')
+    //- <label class="control-label">设备</label>
+    //- <div class="controls">
+    //- <input type="text" id="ToolMachine" name="Program_NO" class="span6 m-wrap" style="width:214px; margin-left: 0px;line-height:34px;" />
+    //- </div>
+
+    //- <label class="control-label">规则名称</label>
+    //- <div class="controls" id="span">
+    //- <input type="text" id="R_NAME" name="R_NAME" class="span6 m-wrap" style="width:220px; margin-left: 0px;line-height:34px;" />
+    //- </div>
+
+    script#addToolConfig(type='text/x-kendo-template', style='margin-top: -200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:700px;">
+        <div id="PROG_NA" style="width: 600px; margin: -20px auto 30px;"> </div>
+        <table class="control-group" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+        <label class="control-label">类型</label>
+        <div class="controls" id="span">
+            <select id="RTYPE" style="height:24px !important;">
+                <option value="1">产量</option>
+                <option value="2">用时</option>
+            </select>
+        </div>
+        </td>
+        <td class="">
+            <label class="control-label">刀具编号</label>
+            <div class="controls" id="span">
+            <input type="text" id="ToolNo" name="ToolNo" class="span6 m-wrap" style="width:188px; margin-left: 0px;line-height:34px;" />
+            </div>
+        </td>
+        </tr>
+        </table>
+        
+        <table id="statusTab" class="control-group hiddenDom" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+        <label class="control-label">状态名称</label>
+        <div class="controls" id="statusDiv">
+            <input type="checkbox" class="statusInp" value="1" id="1"/>
+            <label for="1">停机</label>
+            <input type="checkbox" class="statusInp" value="2" id="2"/>
+            <label for="2">运行</label>
+            <input type="checkbox" class="statusInp" value="3" id="3"/>
+            <label for="3">空闲</label>
+            <input type="checkbox" class="statusInp" value="4" id="4"/>
+            <label for="4">关机</label>
+            <input type="checkbox" class="statusInp" value="5" id="5"/>
+            <label for="5">调试</label>
+        </div>
+        </td>
+        </tr>
+        </table>
+        
+        <table class="control-group" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+
+
+   
+        </td>
+        <td class="">
+        <label class="control-label">程序号</label>
+        <div class="controls" id="span">
+            <select id="PROGRAM" style="width:215px;height:24px !important;">
+                <option value=""></option>
+            </select>
+        </div>
+        </td>
+        
+        <td class="">
+        <label class="control-label">刀具名称</label>
+        <div class="controls" id="span">
+        <input type="text" id="ToolName" name="ToolName" class="span6 m-wrap" style="width:200px; margin-left: 0px;line-height:34px;" />
+        </div>
+        </td>
+
+        </tr>
+        </table>
+        
+
+        <table class="control-group" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+        <label class="control-label">预计寿命(h)</label>
+        <div class="controls" id="span">
+        <input type="number" id="EXCEPT_LIFE" name="EXCEPT_LIFE" class="span6 m-wrap" style="width:220px; margin-left: 0px;line-height:34px;" />
+        </div>
+        </td>
+        <td class="">
+        <label class="control-label">预警寿命(h)</label>
+        <div class="controls" id="span">
+        <input type="number" id="WARN_LIFE" name="WARN_LIFE" class="span6 m-wrap" style="width:200px; margin-left: 0px;line-height:34px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#STATUS_IDS(type='text/x-kendo-template', style='margin-top: -200px;').
+        #if(data.STATUS_IDS==""||data.STATUS_IDS==null){#
+            <div></div>
+        #}else{#
+            #var arr = ["停机","运行","空闲","关机","调试"]#
+            <div>#:_.map(data.STATUS_IDS.split(","),function(item){return arr[item-1]})#</div>
+        #}#
+    script#EXCEPT_LIFE2(type='text/x-kendo-template', style='margin-top: -200px;').
+            <div>#:(parseFloat(data.EXCEPT_LIFE)/3600).toFixed(2)#</div>
+    script#WARN_LIFE2(type='text/x-kendo-template', style='margin-top: -200px;').
+            <div>#:(parseFloat(data.WARN_LIFE)/3600).toFixed(2)#</div>
+    script#R_TYPET(type='x-kendo-template').
+        # if ( data.R_TYPE == 1) { #
+        <div>
+            <div style="float: left;margin-left:4px">产量</div>
+        </div>
+        # } else if(data.R_TYPE == 2) { #
+        <div>
+            <div style="float: left;margin-left:4px">用时</div>
+        </div>
+        # } #
+    script#treeview-template(type='text/kendo-ui-template').
+            <i class="#:item.icon#"></i>
+            <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+
+
+
+
+
+

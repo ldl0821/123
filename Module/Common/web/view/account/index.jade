@@ -1,0 +1,166 @@
+﻿extends ../../../../../views/layout
+append headjavascript
+    script(type='text/javascript',src='./Common/web/controller/accountController.js')
+    link(type='text/css',href='./Common/web/css/account.css',rel='stylesheet')
+    
+block content
+    .row-fluid
+      .span12
+        ul.breadcrumb
+          li
+            i.icon-home
+            a(href='/') #{lang.EmployeePerformance.Home}
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='AccountManage') #{lang.Common.AccountManagement}
+    .row-fluid(ng-controller='accountctrl')
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(style='width: 280px;')
+                    .control-group
+                      .controls
+                        button#tree_add.btn.blue(ng-click='tree_add()', title='#{lang.EmployeePerformance.Add}')
+                          | #{lang.EmployeePerformance.Add}
+                          i.icon-plus-sign
+                        button#tree_edit.btn.purple(ng-click='tree_edit()', title='#{lang.Order.Edit}')
+                          | #{lang.Order.Edit}
+                          i.icon-edit
+                        button#tree_delete.btn.red(ng-click='tree_delete()', title='#{lang.Order.Delete}')
+                          | #{lang.Order.Delete}
+                          i.icon-remove-sign
+                    table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                      tr
+                        td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                          a.k-link(tabindex='-1', href='#') #{lang.Common.AccountGroup}
+                          i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
+                      tr
+                        td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
+                          div(style='height: 424px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                            #orgnizetree
+                            i#tree_addRootNode.icon-plus-sign(ng-click='tree_addRootNode()', style='margin-left:20px;font-size:14px;display:none;')
+                td(valign='top', style='padding-left:5px;')
+                  .control-group(style='height: 34px;')
+                    .controls
+                      .input-icon.left(style='width: 250px; display: inline;')
+                        i.icon-search
+                        input#filter.m-wrap(type='text', placeholder='#{lang.Common.Account}')
+                      button.btn.blue(ng-click='adduser()', title='#{lang.Common.NewAccount}')
+                        | #{lang.EmployeePerformance.Add}
+                        i.icon-plus-sign
+                      button.btn.green(ng-click='lockuser()', title='#{lang.Common.RevDisable}')
+                        | #{lang.Common.RevDisable}
+                        i.icon-unlock
+                      button.btn.red(ng-click='deleteuser()', title='#{lang.Common.DeleteAccount}')
+                        | #{lang.Order.Delete}
+                        i.icon-remove-sign
+                  .tabbable.tabbable-custom(style='margin-bottom: 0px; position: absolute; right: 18px; top: 190px;')
+                    .tab-content(style='border-width: 0px; padding-top: 0px; padding-bottom: 0px;')
+                      #tab_2_1.tab-pane
+                      #tab_2_2.tab-pane.active
+                    ul.nav.nav-tabs
+                      li.active(value='1')
+                        a(href='#tab_2_1', data-toggle='tab') #{lang.EmployeePerformance.Personnel}
+                      li(value='2')
+                        a(href='#tab_2_2', data-toggle='tab') #{lang.EmployeePerformance.Equipment}
+                  #grid
+
+    //模板---------账号添加
+    script#popup-add(type='text/x-kendo-template')
+        form#signupForm.form-horizontal
+          .control-group
+            label.control-label
+              span.required *
+              | #{lang.Common.Account}
+            .controls
+              input#USER_NAME.span6.m-wrap(type='text', name='USER_NAME', data-required='1',ng-model='user.USER_NAME')
+          .control-group
+            label.control-label
+              span.required *
+              | #{lang.Common.Password}
+            .controls
+              input#PASSWORD.span6.m-wrap(type='password', name='PASSWORD', data-required='1',ng-model='user.PASSWORD')
+          .control-group
+            label.control-label
+              span.required *
+              | #{lang.Common.AssociateCustomer}
+            .controls
+              input#COMBOX.m-wrap(type='text', name='COMBOX', data-required='1',ng-model='user.REF_NAME')
+          .control-group
+            label.control-label #{lang.Common.ExpirationDate}
+            .controls
+              input#EXPIRED.span6.m-wrap(name='EXPIRED', type='text', style='width: 214px; margin-left: 0px;',ng-model='user.EXPIRED')
+          .form-actions
+            #Win_Submit.btn.green
+              | #{lang.EmployeePerformance.OK}
+              i.icon-ok
+            #Win_Cancel.btn
+              | #{lang.EmployeePerformance.Cancel}
+              i.icon-remove
+
+    //模板---------开关
+    script#template_STATE(type='text/x-kendo-template')
+      # if ( data.STATE == 1) { #
+      <div><img src="./Common/web/images/buttonON.png" value="1" alt="sss" style="cursor:pointer;" onclick="f_Enable(this)" /></div>
+      # } else { #
+      <div><img src="./Common/web/images/buttonOFF.png" value="0" alt="sss" style="cursor:pointer;" onclick="f_Enable(this)" /></div>
+      # } #
+
+      
+    //模板----------树
+    script#treeview-template(type='text/x-kendo-template')
+      <i class="#:item.icon#"></i>
+      <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+  
+    //模板----------编辑用户
+    script#popup-edit(type='text/x-kendo-template').
+      <form id="signupForm" class="form-horizontal">
+          <div class="control-group">
+              <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>#{lang.Common.User}</label>
+              <div class="controls">
+                  <input type="text" id="USER_NAME" name="USER_NAME" data-required="1" class="span6 m-wrap" />
+              </div>
+          </div>
+          <div class="control-group">
+              <label class="control-label"><span class="required">*</span>#{lang.Common.AssociatedWithTheName}</label>
+              <div class="controls">
+                  <input type="text" id="COMBOX" name="COMBOX" data-required="1" style='margin-left:0px;' />
+              </div>
+          </div>
+          <div class="control-group">
+              <label class="control-label">#{lang.Common.ExpirationDate}</label>
+              <div class="controls">
+                  <input id="EXPIRED" name="EXPIRED" type="text" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+              </div>
+          </div>
+          <div class="form-actions">
+              <div id="Win_Submit" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+              <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+          </div>
+      </form>
+
+    ///////模板---------------重置密码
+    script#popup-passwordreset(type='text/x-kendo-template').
+      <form id="signupForm" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" data-lang="Common.PASSWORD"><span class="required">*</span>#{lang.Common.Password}</label>
+            <div class="controls">
+                <input type="password" id="PASSWORD" name="PASSWORD" class="span6 m-wrap"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" data-lang="Common.CONFIRM_PASSWORD"><span class="required">*</span>#{lang.Common.ConfirmPassword}</label>
+            <div class="controls">
+                <input type="password" id="CONFIRM_PASSWORD" name="CONFIRM_PASSWORD" class="span6 m-wrap" />
+            </div>
+        </div>
+        <div class="form-actions">
+            <button id="Win_Submit" type="button" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></button>
+            <button id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></button>
+        </div>
+    </form>
+
+
+

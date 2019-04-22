@@ -1,0 +1,46 @@
+extends ../../../../../views/layout
+append headcss 
+  link(href='./Common/web/css/factorycalendar/Calendar.css', rel='stylesheet', type='text/css')
+append headjavascript
+  script(type='text/javascript',src='./Common/web/controller/fclendarController.js')
+block content
+    .row-fluid
+      .span12
+        h3.page-title()
+          | #{lang.Common.FactoryCalendar}
+        ul.breadcrumb
+          li
+            i.icon-home
+            a(href='/') #{lang.EmployeePerformance.Home}
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='AccountManage') #{lang.Common.FactoryCalendar}
+     .row-fluid
+       .aboluo-w-700
+        .aboluo-leftdiv
+         .aboluo-tools
+          .aboluo-calendar-select-year
+          .aboluo-calendar-month
+           a.aboluo-month-a-perv(href='javascript:;') < 
+           a.aboluo-month-a-next(href='javascript:;') >
+          input.aboluo-toToday(type='button', value='#{lang.Common.ReturnToday}')
+         .aboluo-rilidiv 
+          table.aboluo-rilitable(cellspacing='0', cellpadding='0')
+           thead.aboluo-rilithead
+            tr
+              th #{lang.Common.One}
+              th #{lang.Common.Two}
+              th #{lang.Common.Three}
+              th #{lang.Common.Four}
+              th #{lang.Common.Five}
+              th(style='color: red;') #{lang.Common.Six}
+              th(style='color: red;') #{lang.Common.Seven}
+        .aboluo-rightdiv
+          p.aboluo-xssj
+          p
+          p.aboluo-currday
+          p.aboluo-ssjjr
+          p.aboluo-xsmx      

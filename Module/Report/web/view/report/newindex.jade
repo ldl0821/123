@@ -1,0 +1,17 @@
+extends ../../../../../views/layout
+
+block content
+   .row-fluid
+      .span12
+        h3.page-title()
+          | #{lang.Report.ReportDerived}
+        ul.breadcrumb
+          li
+            i.icon-home
+            a(href='/') #{lang.EmployeePerformance.Home}
+            i.icon-angle-right
+          li
+            a(href='javascript:;') #{lang.Report.Report}
+            i.icon-angle-right
+          li
+            a(href='javascript:;') #{lang.Report.ReportDerived}

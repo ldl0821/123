@@ -1,0 +1,111 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./javascripts/UI/Scripts/media/css/inbox.css',rel='stylesheet')
+    link(href='./ToolLife/web/css/jquery-confirm.min.css',type='text/css',rel='stylesheet')
+    link(href='./ToolLife/web/css/bootstrap-table.css',type='text/css',rel='stylesheet')
+    link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet') 
+    link(type='text/css',href='./ToolLife/web/css/Telecontrol.css',rel='stylesheet')
+    link(href='./ToolLife/web/css/CutterManage.css',type='text/css',rel='stylesheet')
+    link(href='./ToolLife/web/css/sanjiliandong.css',type='text/css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+    script(type='text/javascript',src='./ToolLife/web/javascripts/bootstrap-table.js')
+    script(type='text/javascript',src='./ToolLife/web/javascripts/jquery-confirm.min.js')
+    script(type='text/javascript',src='./ToolLife/web/controller/sanjiliandong.js')
+    script(type='text/javascript',src='./ToolLife/web/controller/ToolLifeController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 刀具寿命
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 刀具管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 刀具寿命
+    .row-fluid
+        #wrap
+            #content(ng-controller='TCtrl')
+                .control-group
+                    .controls(style='width:100%;height:59px;')
+                        .control-group(style='float:left;')
+                            #addTool.btn.purple(style='float:left;margin-right:30px;')
+                                | 装刀
+                                i.icon-plus
+                            .span(style='width: 315px !important;')
+                                .control-group(style='margin-bottom: 5px;')
+                                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;position:relative;top:-5px;') #{lang.Alarm.MachineGroup}
+                                    input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+                            .span(style='width: 350px !important;')
+                                .control-group(style='margin-bottom: 5px;position: relative;top:-5px')
+                                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;margin-top:10px;') #{lang.Alarm.MachineName}
+                                    select(multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+                            .span(style='width: 314px !important;margin-left:0px !important;')
+                                .control-group(style='margin-bottom: 5px;')
+                                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineNo}
+                                    input( id="my-selects"  class='selectpicker')
+                    .controls
+                        .input-icon.left(style='width: 150px; display: inline;margin-left:10px;position:relative;')
+                            i.icon-search(style="position:absolute !important;top:-6px;left:0px;")
+                            input#ToolNo.m-wrap(type='text',ng-model='str' placeholder='刀具编号' style="width:130px !important;")
+                        .left(style='display: inline;margin-left:10px;')
+                            #QueryTool.btn.blue(style="margin-top:0px;")
+                                | 查询
+                                i.icon-search
+                .row-fluid1.inbox
+                    div
+                        ul.inbox-nav.margin-bottom-10(style='position: absolute;right: 20px;margin-top: 10px;')
+                            li.all.active
+                                a.btn(data-title='', href='javascript:;') 所有
+                                b
+                            li.unlock
+                                a.btn(data-title='3', href='javascript:;') 报废
+                                b
+                            li.unlock
+                                a.btn(data-title='2', href='javascript:;') 预警
+                                b
+                            li.lock
+                                a.btn(data-title='1', href='javascript:;') 进行中
+                                b
+                    div
+                ul.members(style='margin-left:0px;')
+                    li(ng-repeat='item in items_son')
+                        div(class="{{dataArr[item.NOW_CUT_STS-1]}}" style='position:relative;width: 100%; height: 30px; border-style: solid; border-width: 2px 2px 0px 2px; border-radius: 5px 5px 0px 0px !important; text-align: center; font-size: 20px; font-weight: bold; line-height: 30px; background-color: ghostwhite; ')
+                            | {{item.MAC_NAME}}
+                            #EditTool(ng-click='editKnife($index)', style='width:30px;height:30px;backgroud-color:blue;position: absolute;top:0px;right:0px;cursor:pointer;')
+                                i.icon-edit
+                        div(class="{{dataArr[item.NOW_CUT_STS-1]}}" style='width: 100%;border-style: solid; border-width: 2px 2px 0px 2px; ')
+                            table.toolTab(style="width:100%;border-color: #CCCCCC;" border="1" cellspacing="0" cellpadding="0")
+                                tr
+                                    td(style="width:35%") 刀具号
+                                    td(style="width:65%") {{item.NEW_CUTTER_NO}}
+                                tr
+                                    td(style="width:35%") 刀具 ID
+                                    td(style="width:65%") {{item.NEW_CUTTER_UNIQUE_NO}}
+                                tr
+                                    td(style="width:35%") 当前寿命(h)
+                                    td(style="width:65%") {{item.REAL_LIFE|toHour}}
+                                tr
+                                    td(style="width:35%") 预警寿命(h)
+                                    td(style="width:65%") {{item.WARN_LIFE|toHour}}
+                                tr
+                                    td(style="width:35%") 装刀时间
+                                    td(style="width:65%") {{item.BEGIN_DATE|reverse}}
+                                tr
+                                    td(style="width:35%") 卸刀时间
+                                    td(style="width:65%") {{item.END_DATE|reverse}}
+                        div(class="{{dataArr[item.NOW_CUT_STS-1]}}" style='width: 100%; height: 62px;border: 2px solid; border-radius: 0px 0px 5px 5px !important; ')
+                            div(style='line-height: 60px; text-align: center;', ng-show='item.NOW_CUT_STS==2')
+                                .btn.green(style='width: 80px;', ng-click='unloadKnife($index)') 卸刀
+                                .btn.blue(style='width: 80px;', ng-click='changeKnife($index)') 换刀
+                            div(style='line-height: 60px; text-align: center;', ng-show='item.NOW_CUT_STS==1||item.NOW_CUT_STS==3')
+                                .btn.blue(style='width: 80px;', ng-click='changeKnife($index)') 换刀
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#treeview-template(type='text/kendo-ui-template').
+            <i class="#:item.icon#"></i>
+            <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+

@@ -1,0 +1,188 @@
+extends ../../../../../views/layout
+append headcss
+  link(type='text/css',href='../ReasonFeedback/web/css/bootstrap-select.css',rel='stylesheet')
+  link(type='text/css',href='../ReasonFeedback/web/css/sanjiliandong.css',rel='stylesheet')
+  link(type='text/css',href='../ReasonFeedback/web/css/AddConfig.css',rel='stylesheet')
+append headjavascript
+  script(type='text/javascript',src='../ReasonFeedback/web/javascripts/dist.js')
+  script(type='text/javascript',src='../javascripts/UI/Scripts/knockout-3.1.0.js')
+  script(type='text/javascript',src='../ReasonFeedback/web/controller/bootstrap-select.js')
+  script(type='text/javascript',src='../ReasonFeedback/web/javascripts/sanjiliandong.js')
+  script(type='text/javascript',src='../ReasonFeedback/web/controller/AddConfigController.js')
+    
+block content
+    .row-fluid
+        .span12
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home} 
+                    i.icon-angle-right
+             
+                li
+                    a(href='javascript:;', data-lang='StateTime') 停机原因配置
+    .row-fluid
+        #contentcontent
+            .control-group(style='height: 34px;')
+                .controls
+                    .input-icon.left(style='width: 250px; display: inline;')
+                        i.icon-search
+                        input#filter.m-wrap(type='text', placeholder='方案名称')
+                    button.btn.blue(data-bind='click:grid_add')
+                        | #{lang.EmployeePerformance.Add}
+                        i.icon-plus-sign                     
+            div
+                #grid
+    //模板---------开关
+    script#template_STATE(type='text/x-kendo-template')
+      # if ( data.IS_OPEN == 1) { #
+      <div><img src="./Common/web/images/buttonON.png" value="1" alt="sss" style="cursor:pointer;" onclick="f_Enable(this)" /></div>
+      # } else { #
+      <div><img src="./Common/web/images/buttonOFF.png" value="0" alt="sss" style="cursor:pointer;" onclick="f_Enable(this)" /></div>
+      # } #
+    script#REPAIR_STATE(type='x-kendo-template').
+        # if ( data.STATE ==1) { #
+        <div><span>停机</span></div>
+        # } else if(data.STATE == 2) { #
+        <div><span>运行</span></div>
+        # } else if(data.STATE == 3) { #
+        <div><span>空闲</span></div>
+        # }else if(data.STATE == 4) { #
+        <div><span>关机</span></div>
+        # }else if(data.STATE == 5) { #
+        <div><span>调试</span></div>
+        # } #
+    script#URGENCY(type='x-kendo-template').
+        # if ( data.URGENCY ==0) { #
+        #{lang.Maintain.Emergency}
+        # } else if(data.URGENCY == 1) { #
+        #{lang.Maintain.Major}
+        # } else if(data.URGENCY == 2) { #
+        #{lang.Maintain.General}
+        # } #
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;padding-bottom:50px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+         #{lang.Maintain.FormRuleMsg}
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">#{lang.Maintain.MaintainFormGeneratorRule}</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.WordPrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.DatePrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.FigurePrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#popup-add(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="addviewmodel" style="min-width:750px;" autocomplete="off" >
+            <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>方案名称</label>
+                           <div class="controls">
+                              <input type="text" id="SCHEME_NAME" name="SCHEME_NAME" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.ELECTRICAL_SYSTEM"><span class="required">*</span>累计时间(m)</label>
+                          <div class="controls">
+                              <input type="number" id="OUT_TIME" name="OUT_TIME" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+            </div>
+
+             <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>状态</label>
+                           <div class="controls zhuangtai">
+                              <input type="text" id="STATE" name="STATE"class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td class='shebei'>
+                          <label class="control-label" data-lang="Common.MAC_NBRname"><span class="required">*</span>设备组</label>
+                          <div class="controls">
+                              <input type="text" id="MAC_NBRname" name="MAC_NBRname" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+            </div>
+            
+             <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>设备名称</label>
+                           <div class="controls zhuangtai">
+                                <input type="text"  style='margin-left:20px' class="span6 m-wrap" id='hiddenMySelect'/>
+                               <select multiple   data-size="5" style='width:200px;' id="my-select" data-live-search-placeholder="搜索"  title="" data-actions-box="true" class='selectpicker'></select>
+                          </div>
+                      </td>
+                      <td class='shebei shebeis'>
+                          <label class="control-label" data-lang="Common.MAC_NBRALL"><span class="required">*</span>设备编号</label>
+                          <div class="controls">
+                                <input type="text"  class="span6 m-wrap"id='hiddenMySelects'/>
+                               <select multiple  id="my-selects" data-live-search-placeholder="搜索"  title="" data-actions-box="true" class='selectpicker'></select>
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+            </div>
+
+
+
+             <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.DESCRIBE">描述</label>
+                           <div class="controls" >
+                              <textarea  id="DESCRIBE" name="DESCRIBE"  class="span6 m-wrap" ></textarea>
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+            </div>
+            <div class="form-actions">
+                <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+                <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+            </div>
+        </form>

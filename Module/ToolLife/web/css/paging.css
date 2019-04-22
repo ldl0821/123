@@ -1,0 +1,95 @@
+* {
+    list-style: none;
+}
+
+.fl {
+    float: left;
+}
+
+.box {
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    right: 20px;
+    bottom: 13px;
+}
+
+.box button {
+    padding: 0 10px;
+    margin: 0 10px;
+    height: 40px;
+    float: left;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    background-color: #ffffff;
+}
+
+.box .first-page,
+.box .last-page {
+    margin: 0;
+}
+
+.box .pageWrap {
+    height: 40px;
+    float: left;
+    overflow: hidden;
+}
+
+.box .pageWrap ul {
+    width: 100000px;
+    height: 40px;
+    float: left;
+}
+
+.box .pageWrap ul li {
+    width: 60px;
+    height: 40px;
+    border: 1px solid #ebebeb;
+    line-height: 40px;
+    box-sizing: border-box;
+    cursor: pointer;
+    float: left;
+}
+
+.box .pageWrap ul .sel-page {
+    background-color: gainsboro;
+}
+
+#pageSelectIns li:hover {
+    color: dodgerblue;
+}
+
+#pageSelectConf li:hover {
+    color: dodgerblue;
+}
+
+#pageSelectProd li:hover {
+    color: dodgerblue;
+}
+
+#pageSelectTool li:hover {
+    color: dodgerblue;
+}
+
+.box .jump-text {
+    width: 60px;
+    height: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 5px;
+    float: left;
+}
+
+.box .jump-button {
+    margin: 0;
+    float: left;
+}
+
+.box .total-pages,
+.box .total-count {
+    margin-left: 10px;
+    float: left;
+    font-size: 14px;
+    margin-top: 3px;
+}

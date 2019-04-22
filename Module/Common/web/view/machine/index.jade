@@ -1,0 +1,352 @@
+﻿extends ../../../../../views/layout
+
+block append headjavascript 
+    script(type='text/javascript',src='./Common/web/controller/machinecontroller.js')
+    script#treeview-template(type='text/kendo-ui-template').
+      <i class="#:item.icon#"></i>
+      <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode">#:item.text#</span>
+    script#popup-add(type='text/x-kendo-template').
+      <form class="form-horizontal" id="machineviewmodel" style="width:750px;">
+          <div class="control-group">
+              <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>#{lang.Common.EquipmentPictures}</label>
+              <div class="controls">
+                  <div>
+                      <input id="PHOTO" type="text" data-bind="value:PHOTO" style="display:none;" />
+                      <div id="PHOTO_img" class="photo" style="width: 200px; height: 150px; display: inline-block;"></div>
+                      <div id="Gallery" style="display:none; overflow-y: auto; width: 320px; height: 150px; display: inline-block; border: 1px solid \#ddd;"></div>
+                  </div>
+                  <span class="btn green fileinput-button">
+                      <i class="icon-plus icon-white"></i>
+                      <span>#{lang.Common.Upload}</span>
+                      <input id="fileupload" type="file" name="files[]">
+                  </span>
+                  <span class="btn blue fileinput-button">
+                      <i class="icon-inbox icon-white"></i>
+                      <span>#{lang.Common.Gallery}</span>
+                      <input id="galleryshow" type="button" name="">
+                  </span>
+              </div>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td width="354">
+                          <label class="control-label" data-lang="Common.MAC_NO">#{lang.EmployeePerformance.DeviceName}</label>
+                           <div class="controls">
+                              <input type="text" id="CATEGORY" name="CATEGORY" data-bind="value:CATEGORY" data-required="1" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.MAC_NAME">#{lang.Common.EquipmentModel}</label>
+                          <div class="controls">
+                              <input type="text" id="MAC_NAME" name="MAC_NAME" data-bind="value:MAC_NAME" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>#{lang.Common.FactoryNumber}</label>
+                           <div class="controls">
+                              <input type="text" id="MAC_NO" name="MAC_NO" data-bind="value:MAC_NO" class="span6 m-wrap" />
+                              <input type="hidden" id="MAC_NBR" name="MAC_NBR" /> 
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.ELECTRICAL_SYSTEM">#{lang.Common.EquipmentSystemModel}</label>
+                          <div class="controls">
+                              <input type="text" id="ELECTRICAL_SYSTEM" name="ELECTRICAL_SYSTEM" data-bind="value:ELECTRICAL_SYSTEM" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+
+                      <td>
+                          <label class="control-label" data-lang="Common.MEMO">#{lang.Common.SystemVersion}</label>
+                          <div class="controls">
+                              <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.BUY_PERSON">#{lang.Common.EquipmentManufacturer}</label>
+                          <div class="controls">
+                              <input type="text" id="BUY_PERSON" name="BUY_PERSON" data-bind="value:BUY_PERSON" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.BORN_DATE">#{lang.Common.ManufactureDate}</label>
+                          <div class="controls">
+                              <input id="BORN_DATE" name="BORN_DATE" type="text" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.PRICE">#{lang.Common.EquipmentPrice}</label>
+                          <div class="controls">
+                              <input type="text" id="PRICE" name="PRICE" data-required="1" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.MANUFACTURE"><span class="required">*</span>#{lang.Common.CustomerCompanyNumber}</label>
+                          <div class="controls">
+                              <input type="text" id="MANUFACTURE" name="MANUFACTURE" data-bind="value:MANUFACTURE" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.SERIAL_NO">#{lang.Order.CustomerName}</label>
+                          <div class="controls">
+                              <input type="text" id="COMBOX" name="COMBOX"  data-required="1" class="span6 m-wrap" style="width: 215px;margin-left:0;" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+            <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.CODE_NO">#{lang.Quality.MacNo}</label>
+                          <div class="controls">
+                              <input type="text" id="CODE_NO" name="CODE_NO" data-bind="value:CODE_NO" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Quality.MAC_PROPERTY">#{lang.Quality.MAC_PROPERTY}</label>
+                          <div class="controls">
+                              <input type="text" id="MAC_PROPERTY" name="MAC_PROPERTY"  data-required="1" class="span6 m-wrap" style="width: 215px;margin-left:0;" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group" hidden>
+              <table >
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.RANK_NUM">#{lang.Common.Sort}</label>
+                          <div class="controls" >
+                              <input type="text" id="RANK_NUM" name="RANK_NUM"     data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+                          </div>
+                      </td>
+                      <td>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.MANUFACTURE">#{lang.Common.Countries}</label>
+                          <div class="controls">
+                              <input type="text" id="Nation" name="Nation" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.MEMO">#{lang.Common.Provinces}</label>
+                          <div class="controls">
+                              <input type="text" id="Province" name="Province" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+                 <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.MANUFACTURE">#{lang.Common.CityArea}</label>
+                          <div class="controls">
+                              <input type="text" id="City" name="City" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.MEMO">#{lang.Common.CountyStreet}</label>
+                          <div class="controls">
+                              <input type="text" id="Street" name="Street" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="form-actions">
+              <div id="Win_Submit" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+              <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+          </div>
+      </form>
+    script#location(type="text/x-kendo-template").
+        <form class="form-horizontal" id="viewmodel">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>#{lang.Common.EquipmentIP}:</label>
+        <div class="controls">
+        <input type="text" id="mac_ip" name="mac_ip" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD"><span class="required">*</span>#{lang.Common.Longitude}:</label>
+        <div class="controls">
+        <input type="number" step="0.01" id="mac_lon" name="mac_lon" value="0.00" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD"><span class="required">*</span>#{lang.Common.Latitude}:</label>
+        <div class="controls">
+        <input type="number" step="0.01" id="mac_lat" name="mac_lat" value="0.00" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">#{lang.Common.HostIP}</label>
+        <div class="controls">
+        <input type="text" id="major_ip" name="major_ip" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">#{lang.Common.CollectionBoxNumber}:</label>
+        <div class="controls">
+        <input type="text" id="CollectionBoxNumber" name="CollectionBoxNumber" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">#{lang.Common.SIMCardNumber}:</label>
+        <div class="controls">
+        <input type="text" id="SIMCardNumber" name="SIMCardNumber" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="form-actions">
+        <div id="Location_Reset" class="btn purple">#{lang.Common.Refresh}<i class="icon-retweet"></i></div>
+        <div id="Location_Ok" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <button id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></button>
+        </div>
+        </form>
+    script#detail-template(type='text/kendo-ui-template').
+        <div>
+        <div style="width: 120px; height: 90px; float: left; background-image: url(./images/machine/NoDefault/#=PHOTO#); background-size: cover; background-position: center center; ">
+        </div>
+        <div class='employee-details' style="float:left">
+        <ul style="margin: 0px;">
+        <li><label>#{lang.Common.Countries}：</label>#= Nation #</li>
+        <li><label>#{lang.Common.Provinces}：</label>#= Province #</li>
+        <li><label>#{lang.Common.CityArea}：</label>#= City #</li>
+        <li><label>#{lang.Common.CountyStreet}：</label>#= Street #</li>
+        </ul>
+        </div>
+        <div class='employee-details' style="float:left">
+        <ul style="margin: 0px;">
+        <li><label>#{lang.Common.EquipmentIP}:</label>#= MAC_IP #</li>
+        <li><label>#{lang.Common.CollectionBoxNumber}：</label>#= GATHER_SUM==null?' ':GATHER_SUM #</li>
+        <li><label>#{lang.Common.SIMCardNumber}：</label>#= SIM_SUM==null?' ':SIM_SUM #</li>
+        </ul>
+        </div>
+        </div>
+    //模板----------树
+    script#tree-template(type='text/x-kendo-template')
+      <i class="#:item.icon#"></i>
+      <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    style.
+        .other {
+            display: none;
+        }
+        .employee-details ul {
+            list-style: none;
+            font-style: italic;
+            margin: 15px;
+            padding: 0;
+        }
+
+            .employee-details ul li {
+                margin: 0;
+                line-height: 1.7em;
+            }
+
+        .employee-details label {
+            display: inline-block;
+            width: 90px;
+            padding-right: 10px;
+            text-align: right;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+        }
+block content
+
+ .row-fluid
+  .span12
+    ul.breadcrumb
+      li
+        i.icon-home
+        a(href='/') #{lang.EmployeePerformance.Home}
+        i.icon-angle-right
+      li
+        a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
+        i.icon-angle-right
+      li
+        a(href='javascript:;', data-lang='AccountManage') #{lang.Common.EquipmentManagement}
+ .row-fluid
+  table(width='100%', cellpadding='0', cellspacing='0')
+    tr
+      td(style='width: 280px;')
+        .control-group
+          .controls
+            button#tree_add.btn.blue( title='#{lang.Common.AddGroup}')
+              | #{lang.EmployeePerformance.Add}
+              i.icon-plus-sign
+            button#tree_edit.btn.purple
+              | #{lang.Order.Edit}
+              i.icon-edit
+            button#tree_delete.btn.red
+              | #{lang.Order.Delete}
+              i.icon-remove-sign
+        table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+          tr
+            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+              a.k-link(tabindex='-1', href='#') #{lang.Efficiencystatistics.EquipmentGroup}
+              i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
+          tr
+            td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
+              div(style='height: 424px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                #orgnizetree
+                i#tree_addRootNode.icon-plus-sign(data-bind='click:tree_addRootNode', style='margin-left:20px;font-size:14px;display:none;')
+      td(valign='top', style='padding-left:5px;')
+        .control-group(style='height: 34px;')
+          .controls
+            .input-icon.left(style='width: 250px; display: inline;')
+              i.icon-search
+              input#filter.m-wrap(type='text', placeholder='#{lang.Common.FactoryNumber}')
+            button#add_mac.btn.blue(data-bind='click:grid_add')
+              | #{lang.EmployeePerformance.Add}
+              i.icon-plus-sign
+            button#del_mac.btn.red(data-bind='click:grid_delete')
+              | #{lang.Order.Delete}
+              i.icon-remove-sign
+            button#move_mac.btn.green(data-bind='click:grid_move')
+              | #{lang.Common.MoveGroup}
+              i.icon-exchange
+            button#move_client.btn.purple(data-bind='click:grid_client')
+              | #{lang.Common.BindingCustomer}
+              i.icon-tag
+            button#move_MoveUp.btn.green(data-bind='click:grid_client')
+              | #{lang.Order.MoveUp}
+              i.icon-share-alt
+            button#move_MoveDown.btn.blue(data-bind='click:grid_client')
+              | #{lang.Order.MoveDown}
+              i.icon-share-alt
+        #grid

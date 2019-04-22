@@ -1,0 +1,107 @@
+extends ../../../../../views/layout
+block append headcss
+    //- link(type='text/css',href='../javascripts/UI/Scripts/bootstrap/dist/css/bootstrap.min.css',rel='stylesheet')
+    link(type='text/css',href='../UpData/web/css/bootstrap-select.css',rel='stylesheet')
+    link(type='text/css',href='../UpData/web/css/UpData.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='../javascripts/UI/Scripts/Angular/angular.js')
+    script(type='text/javascript',src='../javascripts/UI/Scripts/bootstrap/dist/js/ui-bootstrap-tpls-0.12.0.min.js')
+    script(type='text/javascript',src='../javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='../javascripts/UI/Scripts/kendo/2014.3.1119/kendo.web.min.js')  
+    script(type='text/javascript',src='../UpData/web/controller/echarts.min.js')
+    script(type='text/javascript',src='../UpData/web/javascripts/bootstrap-select.js')
+    script(type='text/javascript',src='../UpData/web/javascripts/dist.js')
+    script(type='text/javascript',src='../UpData/web/controller/UpDataController.js')
+    script(type='text/javascript',src='../UpData/web/javascripts/UpData.js')
+    
+block content
+    .row-fluid
+        .span12
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home} 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.UpData.EquipmentParameterMonitoring}
+    .row-fluid
+        div
+            div.clearfix
+                .control-group.inputleft
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;margin-left:30px;') #{lang.Alarm.MachineGroup}
+                            input(type="text" id="MAC_NBRname" name="MAC_NBRname" class="span6 m-wrap" style='float:left')
+                        //- .controls
+                        //-     label.control-label 客户
+                        //-     input(type="text" id="MAC_NBRNAME" name="MAC_NBR" class="span6 m-wrap")
+                .control-group.inputleft
+                    .controls
+                        .input-icon.left(style='width: 250px; display: inline;')
+                            label.control-label #{lang.Order.DeviceName}
+                            select(multiple  id="my-selecta" data-live-search-placeholder="搜索" title='' data-actions-box="true" class='selectpicker')
+                .control-group.inputleft(style="width:250px;")
+                    .controls
+                        label.control-label(style='margin-left:50px') #{lang.Alarm.MachineNo}
+                        input(type="text" id="MAC_NBRNUMBER" name="MAC_NBR" class="span6 m-wrap")
+            div.clearfix
+                .control-group.inputleft
+                    .controls
+                        .input-icon.left(style='width: 250px; display: inline;')
+                            label.control-label #{lang.UpData.EquipmentParameters}
+                            select(multiple  id="my-select" data-live-search-placeholder="搜索" data-actions-box="true" class='selectpicker')
+                .control-group.inputleft(style='margin-left:10px')
+                    .controls
+                        label.control-label(style='margin-left:35px') #{lang.UpData.AmountOfData}
+                        input(type="number" min=1 id="numberXlength" value="30"  class="span6 m-wrap")
+                .control-group.inputleft(style='margin-left:50px')
+                    .controls
+                        label.radio(style='margin-top: 5px !important;font-size: 12px;')
+                                input(type='radio', name='searchType', checked='', value='2')
+                                | #{lang.YieldProcessingBeat.All}
+                        label.radio(style='margin-top: 5px !important;font-size: 12px;')
+                                input(type='radio', name='searchType',  value='1')
+                                | #{lang.UpData.Grouping}
+                button.btn.green(id='searchData') #{lang.Alarm.Search}
+                        i.icon-search
+        .tabbable.tabbable-custom(style='margin-top: 5px;')
+            ul.nav.nav-tabs
+                //- li.active
+                //-     a(data-toggle='tab', href='#main') 设备参数追踪
+                //- li
+                //-     a(data-toggle='tab', href='#main2') #{lang.Maintain.DateM}
+            .tab-content(style='overflow:visible;min-height:500px')
+                div(id="mainpend" class='tab-pane  active' style="width: 100%;min-height: 500px")
+                //- <div id="main2" class='tab-pane' style="width: 100%;height: 500px;background:#ccc;"></div>
+  
+    script#ADD_TASK(type='x-kendo-template').
+        # if ( data.ADD_TASK ==0) { #
+        <a>#{lang.Order.No}</a>
+        # } else if(data.ADD_TASK == 1) { #
+        <a>#{lang.Order.Yes}</a>
+        # } #
+    script#CYCLE_TYPE1(type='x-kendo-template').
+        # if ( data.CYCLE_TYPE ==0) { #
+        #{lang.Maintain.Time}:#:data.CYCLE_INTERVAL#h
+        # } else if(data.CYCLE_TYPE == 1) { #
+        #{lang.Maintain.Yield}:#:data.CYCLE_INTERVAL#个
+        # } else if(data.CYCLE_TYPE == 2) { #
+        #{lang.Maintain.RunTime}:#:data.CYCLE_INTERVAL#h
+        # } #
+    script#DEGREE(type='x-kendo-template').
+        # if ( data.DEGREE ==0) { #
+         #{lang.Maintain.Emergency}
+        # } else if(data.DEGREE == 1) { #
+         #{lang.Maintain.Major}
+        # } else if(data.DEGREE == 2) { #
+         #{lang.Maintain.General}
+        # } #
+    script#OPERATOR_PLAN_STATE(type='x-kendo-template').
+        <div class="btn purple" style="padding: 3px 8px 3px 14px;" onclick="f_edit('#:data.PLAN_NBR#')">#{lang.Maintain.EDIT}<i class="icon-edit"></i></div>
+        <div class="btn red" style="padding: 3px 8px 3px 14px;" onclick="f_del('#:data.PLAN_NBR#')">#{lang.Maintain.DELETE}<i class="icon-remove-sign"></i></div>
+        # if(data.PLAN_STATE ==0) { #
+        <div class="btn green" style="padding: 3px 8px 3px 14px;" onclick="f_goMaintain('#:data.PLAN_NBR#')">#{lang.Maintain.Excute}<i class="icon-circle-arrow-right"></i></div>
+        # } #
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+ 

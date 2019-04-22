@@ -1,0 +1,43 @@
+extends ../../../../views/layout
+
+append headcss
+    style.
+        .mce-window {
+            transform: initial !important;
+        }   
+        #mceu_19{
+        }
+        .row-fluid .span6{
+            width:70%;
+        }
+append headjavascript
+    script(type='text/javascript',src='../TinyMCE/web/js/tinymce/js/tinymce/tinymce.min.js')
+    script(type='text/javascript',src='../TinyMCE/web/js/jquery.form.js')
+    script(type='text/javascript',src='../TinyMCE/web/controller/TinyMCECtrl.js')
+block content
+    .row-fluid
+            .span12
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') #{lang.EmployeePerformance.Home} 
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='AccountManage') #{lang.TinyMCE.CustomerInformationManagement}
+            .span(style='width: 270px !important;margin-bottom:20px')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;display:inline-block;float:left') #{lang.TinyMCE.Customer}
+                    input(type="text" id="MAC_NBRname" name="MAC_NBRname" class="span6 m-wrap")
+            .span(style='width: 270px !important;margin-bottom:20px')
+                .control-group#MAC_NBRnameid(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;display:inline-block;float:left') #{lang.TinyMCE.templateName}
+                    input(type="text" id="Num_Name" name="Num_Name" class="span6 m-wrap")
+            button(style='margin-left:20px;float:left;').btn.blue#btnSave #{lang.Common.Save}  
+                i.icon-plus-sign
+            button(style='margin-left:10px;float:left;').btn.red#btnDelete #{lang.Common.Delete}  
+                i.icon-remove-sign
+                
+    textarea#elm1 #{lang.TinyMCE.TextContent}
+    
+    
+    

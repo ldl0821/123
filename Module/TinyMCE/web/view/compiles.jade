@@ -1,0 +1,24 @@
+extends ../../../../views/layout
+append headcss
+    style.
+        .mce-window {
+            transform: initial !important;
+        }   
+        #mceu_19{
+        }
+append headjavascript
+    script(type='text/javascript',src='../TinyMCE/web/controller/compiles.js')
+block content
+    .row-fluid
+            .span12
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') #{lang.EmployeePerformance.Home} 
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='AccountManage') 客户信息主页
+    #elm1 
+    
+    
+    

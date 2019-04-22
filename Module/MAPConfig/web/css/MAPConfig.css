@@ -1,0 +1,176 @@
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+    .addworkshop>span {
+        margin-right: 0px !important;
+    }
+}
+
+body {
+    padding: 15px !important;
+}
+
+.title {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.addworkshop {
+    width: 100%;
+    height: 180px;
+    border: 1px solid #000;
+    overflow-y: auto;
+}
+
+.addworkshop>span {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#pageWidth {
+    border: 1px solid #ccc;
+}
+
+.addworkshop>.operationtitle {
+    text-align: center;
+}
+
+.activenewtoolshop {
+    background: #f35800;
+    color: #fff;
+}
+
+.newtoolshop {
+    cursor: pointer;
+}
+
+.addfacility {
+    width: 100%;
+    height: 180px;
+    border: 1px solid #000;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.addfacility .operationtitle {
+    text-align: center;
+}
+
+.addfacility span {
+    cursor: pointer;
+}
+
+.addwire {
+    margin-top: 20px;
+    border: 1px solid #000;
+    padding: 5px;
+}
+
+.leftvessel {
+    float: left;
+    width: 11%;
+}
+
+.mediatevessel {
+    position: relative;
+    float: left;
+    width: 77%;
+    min-height: 800px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    overflow: auto;
+}
+
+input {
+    width: 100%;
+}
+
+select {
+    width: 100%;
+}
+
+#input_MAC_NBRname[readonly] {
+    background: #fff !important;
+    border-right: 1px solid rgb(229, 229, 229);
+    cursor: default;
+}
+
+input[type="file"] {
+    width: 100% !important;
+}
+
+.rightvessel>div:nth-child(2) {
+    padding: 5px;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.rightvessel>div:nth-child(3) {
+    padding: 5px;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.rightvessel>div:nth-child(4) {
+    padding: 5px;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.rightvessel>div:nth-child(5) {
+    padding: 5px;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.rightvessel>div:nth-child(6) {
+    padding: 5px;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.rightvessel {
+    float: left;
+    width: 10%;
+}
+
+input[type="color"] {
+    width: 44px;
+    height: 23px;
+    border: 0;
+    padding: 0;
+    background-color: #eee;
+}
+
+.removeImgs {
+    cursor: pointer;
+}
+
+.configXinxi {
+    position: relative;
+    margin: 0 auto;
+    border: 1px solid #000;
+    margin-top: 10px;
+}
+
+#input_MAC_NBRname {
+    height: 34px !important;
+}
+
+.icon-sort-down {
+    position: relative !important;
+    top: 1px !important;
+}
+
+
+/* .createEvents[data-active='true'] {
+    border: 2px dashed red !important;
+} */
+
+[data-active='true'] {
+    border: 2px dashed red !important;
+}
+
+#saveBtn {
+    margin-top: 15px;
+    padding: 4px 10px;
+    font-size: 14px;
+}

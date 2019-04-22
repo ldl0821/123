@@ -1,0 +1,47 @@
+.inbox-nav li {
+    float: right;
+    top: -53px;
+}
+
+.inbox-nav li a.btn {
+    border-radius: 0px !important;
+}
+
+#sidebar {
+    float: left;
+    width: 300px;
+}
+
+.members {
+    list-style: none;
+}
+
+.members li {
+    /* display: inline-block; */
+    width: 280px;
+    height: 270px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    float: left;
+}
+
+.toolTab tr td{
+    text-align: center;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.icon-sort-down{
+    margin-top:-2px !important;
+}
+
+.workingBGC{
+    border-color: green !important;
+}
+.warnBGC{
+    border-color:gold !important;
+}
+.scrapBGC{
+    border-color: red !important;
+}

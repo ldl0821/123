@@ -1,0 +1,110 @@
+#map {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+* {
+    color: #fff;
+}
+
+#introduce {
+    width: 100%;
+    height: 100%;
+}
+
+.fp-controlArrow {
+    display: none;
+}
+
+.elementTitle {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.drawing {
+    transform-origin: 0% 0%;
+}
+
+#rightId {
+    position: fixed;
+    width: 100px;
+    text-align: center;
+    right: -100px;
+    top: 180px;
+}
+
+.plant {
+    cursor: pointer;
+    margin: 3px 3px;
+    padding: 3px;
+}
+
+.offside {
+    position: absolute;
+    left: -6px;
+    width: 6px;
+    height: 40px;
+    background: #ff5000;
+    cursor: pointer;
+}
+
+.activeplant {
+    background: #ff7000;
+    color: #fff;
+}
+
+.ellipseStop {
+    background: rgb(245, 40, 12);
+    float: left;
+}
+
+.ellipseRun {
+    background: rgb(78, 207, 31);
+    float: left;
+}
+
+.ellipseIdle {
+    background: rgb(230, 210, 21);
+    float: left;
+}
+
+.ellipseOff {
+    background: rgb(96, 103, 101);
+    float: left;
+}
+
+.ellipseDebug {
+    background: rgb(27, 36, 247);
+    float: left;
+}
+
+.createPoliceLineSum {
+    position: relative;
+    top: -20px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.BMap_bubble_content p {
+    color: #000 !important;
+}
+
+.a4 {
+    color: #000 !important;
+}
+
+.anchorBL {
+    display: none;
+}
+
+#container {
+    overflow-x: scroll;
+}
+
+#container::-webkit-scrollbar {
+    display: none;
+}

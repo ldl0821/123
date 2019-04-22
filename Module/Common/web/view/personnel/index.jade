@@ -1,0 +1,168 @@
+extends ../../../../../views/layout
+append headcss
+  link(type='text/css',href='../Common/web/css/bootstrap-select.css',rel='stylesheet')
+  link(type='text/css',href='../Common/web/css/sanjiliandong.css',rel='stylesheet')
+  link(type='text/css',href='../Common/web/css/personnel.css',rel='stylesheet')
+append headjavascript
+  script(type='text/javascript',src='../javascripts/UI/Scripts/knockout-3.1.0.js')
+  script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+  script(type='text/javascript',src='../Common/web/controller/personnelController.js')
+
+block content
+    .row-fluid
+        .span12
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='StateTime') 人员管理
+    .row-fluid
+        #contentcontent
+            .control-group(style='height: 34px;')
+                .controls
+                    .input-icon.left(style='width: 250px; display: inline;')
+                        i.icon-search
+                        input#filter.m-wrap(type='text', placeholder='人员编号')
+                    button.btn.blue(data-bind='click:grid_add')
+                        | #{lang.EmployeePerformance.Add}
+                        i.icon-plus-sign                     
+            div
+                #grid
+    script#REPAIR_STATE(type='x-kendo-template').
+        # if ( data.REPAIR_STATE ==0) { #
+        <div><div class="REPAIR_STATE NO"></div><span>#{lang.Maintain.NoStart}</span></div>
+        # } else if(data.REPAIR_STATE == 1) { #
+        <div><div class="REPAIR_STATE MAINNING"></div><span>#{lang.Maintain.Process}</span></div>
+        # } else if(data.REPAIR_STATE == 2) { #
+        <div><div class="REPAIR_STATE DONE"></div><span>#{lang.Maintain.Finish}</span></div>
+        # } #
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#URGENCY(type='x-kendo-template').
+        # if ( data.URGENCY ==0) { #
+        #{lang.Maintain.Emergency}
+        # } else if(data.URGENCY == 1) { #
+        #{lang.Maintain.Major}
+        # } else if(data.URGENCY == 2) { #
+        #{lang.Maintain.General}
+        # } #
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+         #{lang.Maintain.FormRuleMsg}
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">#{lang.Maintain.MaintainFormGeneratorRule}</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.WordPrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.DatePrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">#{lang.Maintain.FigurePrefix}</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#popup-add(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="addviewmodel" style="min-width:750px;" autocomplete="off" >
+        <div class="control-group">
+            <table>
+                <tr>
+                    <td>
+                        <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>人员编号</label>
+                        <div class="controls">
+                            <input type="text" id="MAC_NO" name="MAC_NO"  class="span6 m-wrap" />
+                            <input type="hidden" id="MAC_NBR" name="MAC_NBR" /> 
+                        </div>
+                    </td>
+                    <td>
+                        <label class="control-label" data-lang="Common.ELECTRICAL_SYSTEM"><span class="required">*</span>性别</label>
+                        <div class="controls" style='position:relative;top:8px'>
+                            男:<input  style='width:50px;position:relative;top:-3px' checked="checked" name="ELECTRICAL_SYSTEM"  type="radio" value='1' />
+                            女:<input  style='width:50px;position:relative;top:-3px' name="ELECTRICAL_SYSTEM"  type="radio" value='2' />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="control-group">
+            <table>
+                <tr>
+                    <td>
+                        <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>人员名字</label>
+                        <div class="controls">
+                            <input type="text" id="MEM_NAME" name="MEM_NAME"  class="span6 m-wrap" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="control-group">
+            <table>
+                <tr>
+                    <td>
+                        <label class="control-label" data-lang="Common.CATEGORY"><span class="required">*</span>#{lang.Alarm.MachineGroup}</label>
+                        <div class="controls">
+                            <input type="text" id="MAC_NBRname" name="MAC_NBRname" class="span6 m-wrap" style="width: 210px; margin-left: 0px;"/>
+                        </div>
+                    </td>
+                    <td style='margin-left:10px;'>
+                        <label class="control-label" style='width:100px' data-lang="Common.ELECTRICAL_SYSTEM"><span class="required">*</span>#{lang.Alarm.MachineName}</label>
+                        <div class="controls" style='margin-left:118px'>
+                            <input type="text" id="HiddenEle" class="span6 m-wrap" />
+                            <select multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker'></select>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="control-group" id="phone_id">
+            <label class="control-label" data-lang="Common.PASSWORD"><span class="required">*</span>#{lang.Alarm.MachineNo}</label>
+            <div class="controls">
+                <input type="text" id="HiddenEleTwo" class="span6 m-wrap" />
+                <select multiple  id="my-selects" data-live-search-placeholder="搜索"  title="" data-actions-box="true" class='selectpicker'></select>
+            </div>
+        </div>
+        <div class="form-actions">
+            <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+            <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#template_SEX(type='text/x-kendo-template')
+      # if (data.SEX == 1) { #
+      <div><span>男</span></div>
+      # } else { #
+      <div><span>女</span></div>
+      # } #

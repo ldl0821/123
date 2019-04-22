@@ -1,0 +1,60 @@
+extends ../../../../../views/layout
+append headcss
+    link(type='text/css',href='./css/bootstrap-select.css',rel='stylesheet')
+    link(type='text/css',href='./MachineParameters/web/css/MachinePara.css',rel='stylesheet')
+append headjavascript
+    script(type='text/javascript',src='./MachineParameters/web/js/highstock.js')
+    script(type='text/javascript',src='./MachineParameters/web/js/highcharts-zh_CN.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/bootstrap-select.js')
+    script(type='text/javascript',src='./MachineParameters/web/controller/MachineParaCtrl.js')
+block content
+    .row-fluid
+            .span12 
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') #{lang.EmployeePerformance.Home} 
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='MachineScheduling') #{lang.UpData.EquipmentParameters}
+    .row-fluid(ng-controller="ParaCtrl")
+        form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+                .row-fluid
+                    div.bothfloat
+                        .span(style='width: 315px !important;')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                                input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+                        .span(style='width: 350px !important;')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineName}
+                                select(multiple  id="my-selecta" data-live-search-placeholder="#{lang.Alarm.Search}"  title=""  data-actions-box="true" class='selectpicker')
+                        .span(style='width: 314px !important;margin-left:0px !important;')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineNo}
+                                input(type="text" id="MAC_NBRNUMBER" name="MAC_NBR" class="span6 m-wrap")
+                    div.bothfloat
+                        .span(style='width: 320px !important;')
+                             .control-group(style='margin-bottom: 5px;')
+                                label.control-label(style='margin-right:10px;') #{lang.UpData.EquipmentParameters}
+                                select(multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+                        .span(style='width:300px !important')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style="width:87px") #{lang.EmployeePerformance.StartTime}
+                                .BZcontrols
+                                    input#startTime.m-wrap(type='text', name='startTime')
+                        .span(style='padding-left:13px')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
+                                .BZcontrols
+                                    input#endTime.m-wrap(type='text', name='endTime')
+        button.btn.green(id='searchData',style='margin-right:20px;float:right',ng-click='search()') #{lang.Alarm.Search}
+            i.icon-search
+        #loading(style='font-size:25px;text-align:center;display:none;margin-top:10px;margin-bottom:20px;')
+            i.icon-spinner.icon-spin
+            |  #{lang.MachineStatus.AreTryingToLoadData}                 
+        .row-fluid#Process(style="height: 500px; min-width: 800px")
+        
+      script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>

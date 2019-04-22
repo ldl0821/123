@@ -1,0 +1,33 @@
+.box {
+    position: relative;
+}
+
+.alarm-box {
+    width: 240px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    background: linear-gradient(rgb(47, 77, 185), rgb(35, 144, 221));
+    padding: 0 30px;
+    border-radius: 10px !important;
+}
+
+.table-box {
+    margin-left: 320px;
+    /* width: 100%; */
+}
+
+.alarm-box>.title {
+    text-align: center;
+    font-size: 25px;
+    color: #fff;
+    padding: 20px;
+    font-weight: 700;
+    text-shadow: 0 0 5px #fff;
+}
+
+.content {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 15px;
+}

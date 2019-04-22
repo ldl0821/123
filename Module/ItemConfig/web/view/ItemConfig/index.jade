@@ -1,0 +1,93 @@
+extends ../../../../../views/layout
+append headcss
+    link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet')
+    link(type='text/css',href='../ItemConfig/web/css/style.css',rel='stylesheet')
+    link(type='text/css',href='../ItemConfig/web/css/ItemConfig.css',rel='stylesheet')
+append headjavascript
+  script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+  script(type='text/javascript',src='../ItemConfig/web/javascript/Transfer.js')
+  script(type='text/javascript',src='../ItemConfig/web/controller/ItemConfigController.js')
+block content
+    .row-fluid
+        .span12
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.ItemConfig.equipmentItemConfig}
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            div.bothfloat
+                .span(style='width: 342px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                        input(type="text" id="MAC_NBRname" name="MAC_NBRname" class="span6 m-wrap")
+                .span(style='width: 360px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:9px') #{lang.Alarm.MachineName}
+                        select(multiple  id="my-select" data-live-search-placeholder="搜索" title="" data-actions-box="true" class='selectpicker')    
+                .span(style='width: 344px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;width: 80px;') #{lang.Alarm.MachineNo}
+                        select(multiple  id="my-selects" data-live-search-placeholder="搜索" title="" data-actions-box="true" class='selectpicker')   
+                button.btn.green(id='searchData',style='float:left;margin-bottom:10px;') #{lang.Alarm.Search}
+                    i.icon-search
+    div(style='margin-top:10px;margin-left:20px;font-size:14px;color:red') 注意:这里选中的是所有设备采集项的交集
+    div.ty-transfer.mt20.ml20#ued-transfer-1
+        .fl.ty-transfer-list.transfer-list-left
+            .ty-transfer-list-head #{lang.ItemConfig.collectItems}
+            .ty-transfer-list-body
+                ul.ty-tree-select
+                    //- li
+                    //-     .ty-tree-div
+                    //-         label.tyue-checkbox-wrapper
+                    //-             span.tyue-checkbox
+                    //-                 input(type="checkbox" class="tyue-checkbox-input" id="tyue-checkbox-blue")
+                    //-                 span.tyue-checkbox-circle
+                    //-             span.tyue-checkbox-txt(title="穿梭框列表内容 ---- 1") 穿梭框列表内容 ---- 1
+            div.ty-transfer-list-foot
+                .ty-tree-div
+                    .tyc-check-blue.fl
+                        input(type="checkbox" class="transfer-all-check" id="tyc-check-blue")
+                        span
+                    .ty-tree-text #{lang.ItemConfig.checkAll}
+        .fl.ty-transfer-operation
+            span.ty-transfer-btn-toright.to-switch
+            span.ty-transfer-btn-toleft.to-switch
+        .fl.ty-transfer-list.transfer-list-right
+            .ty-transfer-list-head #{lang.ItemConfig.checkedItems}
+            .ty-transfer-list-body
+                ul.ty-tree-select
+                    
+            .ty-transfer-list-foot
+                .ty-tree-div
+                    .tyc-check-blue.fl
+                        input(type="checkbox" class="transfer-all-check" id="tyc-check-blue")
+                        span
+                    .ty-tree-text #{lang.ItemConfig.checkAll}
+        .clearboth
+    button.btn.blue#saveItem(style='margin-top:20px;margin-left:20px;') #{lang.Common.Save}
+    script#REPAIR_STATE(type='x-kendo-template').
+        # if ( data.REPAIR_STATE ==0) { #
+        <div><div class="REPAIR_STATE NO"></div><span>#{lang.Maintain.NoStart}</span></div>
+        # } else if(data.REPAIR_STATE == 1) { #
+        <div><div class="REPAIR_STATE MAINNING"></div><span>#{lang.Maintain.Process}</span></div>
+        # } else if(data.REPAIR_STATE == 2) { #
+        <div><div class="REPAIR_STATE DONE"></div><span>#{lang.Maintain.Finish}</span></div>
+        # } #
+    script#URGENCY(type='x-kendo-template').
+        # if ( data.URGENCY ==0) { #
+        #{lang.Maintain.Emergency}
+        # } else if(data.URGENCY == 1) { #
+        #{lang.Maintain.Major}
+        # } else if(data.URGENCY == 2) { #
+        #{lang.Maintain.General}
+        # } #
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>

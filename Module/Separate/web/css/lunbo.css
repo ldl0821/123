@@ -1,0 +1,105 @@
+.pagination {
+    position: relative;
+}
+
+.pagination>div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.owncreateState {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.pagination>ul {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999999999;
+}
+
+
+/* for Chrome */
+
+#map_state::-webkit-scrollbar {
+    display: none;
+}
+
+#map_state {
+    overflow-x: hidden
+}
+
+.activeLi {
+    background-color: #fff !important;
+}
+
+#stateChild>ul {
+    position: relative;
+    left: 40%;
+    z-index: 9999999999;
+}
+
+.status_list>ul>li {
+    list-style: none;
+    float: left;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background: none;
+    border: 2px solid #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#policeCentent {
+    position: relative;
+}
+
+#policeCentent>div {
+    position: absolute;
+    display: none;
+}
+
+#policeCentent>ul {
+    position: relative;
+    left: 40%;
+    z-index: 9999999999;
+}
+
+
+/**
+ * For IE 6/7 only
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+#policeCentent>ul>li {
+    list-style: none;
+    float: left;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background: none;
+    border: 2px solid #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.pagination>ul>li {
+    list-style: none;
+    float: left;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background: none;
+    border: 2px solid #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}

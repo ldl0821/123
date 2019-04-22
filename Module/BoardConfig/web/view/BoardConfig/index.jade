@@ -1,0 +1,206 @@
+extends ../../../../../views/layout
+block append headcss
+    //- link(type='text/css',href='../javascripts/UI/Scripts/bootstrap/dist/css/bootstrap.min.css',rel='stylesheet')
+    link(type='text/css',href='../BoardConfig/web/css/BoardConfig.css',rel='stylesheet')
+    link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+    script(type='text/javascript',src='../BoardConfig/web/controller/BoardConfigController.js')
+    script(type='text/javascript',src='../BoardConfig/web/javascript/wireContorl.js')
+    
+block content
+    .row-fluid
+        .tableActive(style='float:right;margin-right:100px;margin-top:20px;cursor: pointer;width:100px;height:30px;text-align: center;line-height:30px;') 组合看板配置
+        .tableActive.active(style='float:right;margin-top:20px;cursor: pointer;width:100px;height:30px;text-align: center;line-height:30px;') 滚动看板配置
+    #scrollConfig
+        .row-fluid
+            h4 地图设备选择
+            div.bothfloat
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                            input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineName}
+                            select(multiple  id="my-select" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+                    .span(style='width: 314px !important;margin-left:0px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineNo}
+                            select(multiple  id="my-selects" data-live-search-placeholder="搜索"  title="" data-actions-box="true" class='selectpicker')
+        .row-fluid
+            h4 设备稼动、状态、报警设备选择
+            div.bothfloat
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                            input(type="text" id="MAC_NBRnameALL"  name="MAC_NBRnameALL" class="span6 m-wrap")
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineName}
+                            select(multiple  id="my-selectALL" data-live-search-placeholder="搜索"  title=""  data-actions-box="true" class='selectpicker')
+                    .span(style='width: 314px !important;margin-left:0px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineNo}
+                            select(multiple  id="my-selectsALL" data-live-search-placeholder="搜索"  title="" data-actions-box="true" class='selectpicker')
+        .row-fluid
+            h4 客户信息
+            div.bothfloat
+                .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 客户信息模板
+                            input(type="text"  id='Num_Name'  class="span6 m-wrap")
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 没有滚动时，时间(毫秒) 有滚动条时无效
+                            input(type="number"  id='introduceTime'  class="span6 m-wrap" value="6000")
+                    .span(style='width: 350px !important;display:none')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 有滚动时，滚动频率 滚动速度越大越快
+                            input(type="number" id='introduceSpeeds'   class="span6 m-wrap" value='1.2')
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 有滚动时，滚动大小 滚动时间间隔越大越慢
+                            input(type="number"  id='introduceTimes'  class="span6 m-wrap" value='10')
+        .row-fluid
+            h4 地图信息
+            div.bothfloat
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 时间(毫秒)
+                            input(type="number" id='MAP_Time' class="span6 m-wrap" value="6000")
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 滚动速度
+                            input(type="number" id='MAP_speed' class="span6 m-wrap" value="1")
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 滚动频率
+                            input(type="number" id='MAP_frequency' class="span6 m-wrap" value="20")
+        .row-fluid
+            h4 稼动率信息
+            div.bothfloat
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 时间(毫秒)
+                            input(type="number" id='activationTime' class="span6 m-wrap" value="6000")
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 一屏几个图表
+                            input(type="number" id='activationEleSum'  class="span6 m-wrap" value='1')
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 一个图表有几个设备
+                            input(type="number"  id='activationMacSum' class="span6 m-wrap" value='5')
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 标准运行
+                            input(type="number"  id='activationStandard' class="span6 m-wrap" value='65')
+                    .span(style='width: 314px !important;margin-left:0px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 显示下面的点
+                            input(type="checkbox" checked id='activationChecked' class="span6 m-wrap")
+        .row-fluid
+            h4 设备状态信息
+            div.bothfloat
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 时间(毫秒)
+                            input(type="number" id='stateTime'  class="span6 m-wrap" value="6000")
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 一屏几个图表
+                            input(type="number" id='stateEleSum' class="span6 m-wrap" value='4')
+                    .span(style='width: 314px !important;margin-left:0px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 显示下面的点
+                            input(type="checkbox" checked  id='stateChecked' class="span6 m-wrap")
+        .row-fluid
+            h4 设备报警信息
+            div.bothfloat
+                    .span(style='width: 315px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 时间(毫秒)
+                            input(type="number" id='policeTime' class="span6 m-wrap" value="6000")
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 行数
+                            input(type="number" id='policeEleSum' class="span6 m-wrap" value='2')
+                    .span(style='width: 350px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 列数
+                            input(type="number" id='policeLineSum' class="span6 m-wrap" value='3')
+                    .span(style='width: 314px !important;margin-left:0px !important;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 显示下面的点
+                            input(type="checkbox" checked id='policeChecked' class="span6 m-wrap")
+            button.btn.blue(id='saveData',style='margin-right:20px;margin-top:20px;float:right;margin-bottom:20px') #{lang.Common.Save}
+    #groupConfig
+        .bothfloat
+            .span(style='width: 250px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 组合看板列
+                    input(type="number" id='combinationLine' class="span6 m-wrap" value="2" style='width:60%')
+            .span(style='width: 250px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') 看板标题
+                    input(type="text" id='boardTitle' class="span6 m-wrap" style='width:60%')
+            span(style='line-height:50px') (配置时边距可能会有所误差)
+        div                    
+            div.borderSize#borderSize
+            .rightConfig
+                select#allType
+                    option(value="activation") 每小时稼动
+                    option(value="information") 客户信息
+                    option(value="alarm") 实时报警
+                    option(value="topography") 车间布局图
+                    option(value="alarmRanking") 报警排名
+                    option(value="productLine") 产品上下线
+                    option(value="cutterLife") 刀具寿命
+                    option(value="utilization") 设备稼动
+                    option(value="d3topography") 虚拟工厂实时状态
+                    option(value="downtimeFeedback") 事件反馈
+                    option(value="equipmentInformation") 设备生产信息
+                div    
+                    label 高
+                    input#linesNumberHeight(type="text" value='200')
+                div    
+                    label 新增到第几列
+                    input#linesNumber(type="text" value='1')
+                button.btn.green#addLine(style='margin-bottom:5px') 新增
+            button.btn.blue(style='margin-top:30px;margin-right:20px;float:right')#addData 保存
+    script#ADD_TASK(type='x-kendo-template').
+        # if ( data.ADD_TASK ==0) { #
+        <a>#{lang.Order.No}</a>
+        # } else if(data.ADD_TASK == 1) { #
+        <a>#{lang.Order.Yes}</a>
+        # } #
+    script#CYCLE_TYPE1(type='x-kendo-template').
+        # if ( data.CYCLE_TYPE ==0) { #
+        #{lang.Maintain.Time}:#:data.CYCLE_INTERVAL#h
+        # } else if(data.CYCLE_TYPE == 1) { #
+        #{lang.Maintain.Yield}:#:data.CYCLE_INTERVAL#个
+        # } else if(data.CYCLE_TYPE == 2) { #
+        #{lang.Maintain.RunTime}:#:data.CYCLE_INTERVAL#h
+        # } #
+    script#DEGREE(type='x-kendo-template').
+        # if ( data.DEGREE ==0) { #
+         #{lang.Maintain.Emergency}
+        # } else if(data.DEGREE == 1) { #
+         #{lang.Maintain.Major}
+        # } else if(data.DEGREE == 2) { #
+         #{lang.Maintain.General}
+        # } #
+    script#OPERATOR_PLAN_STATE(type='x-kendo-template').
+        <div class="btn purple" style="padding: 3px 8px 3px 14px;" onclick="f_edit('#:data.PLAN_NBR#')">#{lang.Maintain.EDIT}<i class="icon-edit"></i></div>
+        <div class="btn red" style="padding: 3px 8px 3px 14px;" onclick="f_del('#:data.PLAN_NBR#')">#{lang.Maintain.DELETE}<i class="icon-remove-sign"></i></div>
+        # if(data.PLAN_STATE ==0) { #
+        <div class="btn green" style="padding: 3px 8px 3px 14px;" onclick="f_goMaintain('#:data.PLAN_NBR#')">#{lang.Maintain.Excute}<i class="icon-circle-arrow-right"></i></div>
+        # } #
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#treeview-templateALL(type='text/kendo-ui-template').
+            <i class="#:item.icon#"></i>
+            <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClickALL(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    

@@ -1,0 +1,87 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='../Statement/web/css/bootstrap-select.css',rel='stylesheet')
+    link(type='text/css',href='./Common/web/css/Alarm.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts-3d.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/modules/exporting.js')
+    script(type='text/javascript',src='../Statement/web/controller/bootstrap-select.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/underscore-min.js')
+    script(type='text/javascript',src='./Common/web/controller/TRTController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | #{lang.Common.AlarmAnalysis}
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.Common.ProcessingAnalysis}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.Common.AlarmAnalysis}
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.StartTime}
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='endTime')
+        .row-fluid
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.StatisticalMethods}
+                    .BZcontrols
+                        input#totalType.m-wrap(type='text', name='totalType')
+            .span(style='width: 315px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                    input(type="text" id="MAC_NBRname" name="MAC_NBRname" class="span6 m-wrap")
+            .span(style='width: 324px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;width:100px;') #{lang.Alarm.MachineName}
+                    select(multiple  id="my-select" data-live-search-placeholder="搜索" data-actions-box="true" class='selectpicker')
+            .span(style='width: 354px !important;margin-left:0px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px;width:100px;') #{lang.Alarm.MachineNo}
+                    select(multiple  id="my-selects" data-live-search-placeholder="搜索" data-actions-box="true" class='selectpicker')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    #search.btn.green(style='margin-left: 50px;')
+                        | #{lang.EmployeePerformance.Search}
+                        i.icon-search
+    #hisChart(style='min-width:700px;height:500px')
+    #hisTable.row-fluid(style='margin-bottom: 20px;')
+    script#popup-add(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="maintainviewmodel" style="width:750px;">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td width="600">
+        <label class="control-label" data-lang="Common.NAME"><span class="required">*</span>#{lang.Common.AlarmReason}</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div id="Win_Submit" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+
+    script#treeview-templatea(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>

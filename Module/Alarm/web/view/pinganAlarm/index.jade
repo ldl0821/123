@@ -1,0 +1,81 @@
+extends ../../../../../views/layout
+append headcss
+    link(type='text/css',href='./css/bootstrap-select.css',rel='stylesheet')
+    link(type='text/css',href='./Alarm/web/css/MachineAlarm.css',rel='stylesheet')
+append headjavascript
+    script(type='text/javascript',src='./Alarm/web/js/highcharts.js')
+    script(type='text/javascript',src='./Alarm/web/js/variable-pie.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/bootstrap-select.js')
+    script(type='text/javascript',src='./Alarm/web/controller/AlarmCtrl.js')
+block content
+    .row-fluid
+            .span12 
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') #{lang.EmployeePerformance.Home} 
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='MachineScheduling') #{lang.Alarm.EquipmentAlarmMonitoring}
+    .row-fluid(ng-controller="AlarmCtrl")
+        form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+                .row-fluid
+                    div.bothfloat
+                        .span(style='width: 315px !important;')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineGroup}
+                                input(type="text" id="MAC_NBRname"  name="MAC_NBRname" class="span6 m-wrap")
+                        .span(style='width: 350px !important;')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineName}
+                                select(multiple  id="my-select" data-live-search-placeholder="#{lang.Alarm.Search}" title="" data-actions-box="true" class='selectpicker')
+                        .span(style='width: 314px !important;margin-left:0px !important;')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style='margin-right:10px') #{lang.Alarm.MachineNo}
+                                select(multiple  id="my-selects" data-live-search-placeholder="#{lang.Alarm.Search}" title="" data-actions-box="true" class='selectpicker')
+                    div.bothfloat
+                        .span(style='width:300px !important')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD',style="width:87px") #{lang.EmployeePerformance.StartTime}
+                                .BZcontrols
+                                    input#startTime.m-wrap(type='text', name='startTime')
+                        .span(style='padding-left:13px')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
+                                .BZcontrols
+                                    input#endTime.m-wrap(type='text', name='endTime')
+                        .span(style='padding-left:35px;width:150px !important;')
+                            .control-group(style='margin-bottom: 10px;')
+                                .BZcontrols(style='line-height: 32px;')
+                                    button.btn.green(id='searchData',style='margin-right:20px;float:right',ng-click='search()') #{lang.Alarm.Search}
+                                        i.icon-search  
+                        //-add 新增导出报表功能 htc:20180625
+                        .span(style='padding-left:0px;width:150px !important;')
+                            .control-group(style='margin-bottom: 10px;')
+                                .BZcontrols(style='line-height: 32px;')
+                                    button.btn.green(id='openExcel',style='margin-left:-110px;',ng-click='export()') 导出
+                                        i.icon-share-alt
+        .Alarmpie.row-fluid(style='height:400px;overflow:auto;width:100%;')
+        #hisTable.row-fluid(style='margin-bottom: 20px;')
+      script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#popup-add(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="maintainviewmodel" style="width:750px;">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td width="600">
+        <label class="control-label" data-lang="Common.NAME"><span class="required">*</span>#{lang.Common.AlarmReason}</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div id="Win_Submit" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>

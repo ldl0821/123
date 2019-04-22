@@ -1,0 +1,33 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./javascripts/Content/jcallout.css',rel='stylesheet')
+    style.
+        .callout-control-label {
+            margin-bottom: 2px !important;
+            padding-top: 0 !important;
+            width: 80px !important;
+        }
+
+        .controls-control-label {
+            margin-left: 100px !important;
+        }
+        
+block append headjavascript
+    script(type='text/javascript',src='./Common/web/controller/factoryController.js')
+    script(src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(src='./javascripts/UI/Scripts/moment.js')
+    script(src='./javascripts/UI/Scripts/jcallout.js')
+block content
+    div
+        .row-fluid
+            .span12
+                h3.page-title(data-lang='AccountManage')
+                    | #{lang.AddStaff.AddStaff}
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') #{lang.EmployeePerformance.Home}
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='System') #{lang.AddStaff.AddStaff}
+

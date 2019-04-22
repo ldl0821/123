@@ -1,0 +1,205 @@
+link(rel='stylesheet', type='text/css', href='../javascripts/UI/Scripts/media/css/bootstrap.min.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/font-awesome.min.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/style-metro.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/style.css')  
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/alertify/alertify.core.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/alertify/alertify.default.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/Content/kendo/2014.1.318/kendo.common.min.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/Content/kendo/2014.1.318/kendo.default.min.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/Content/Bandex.css')
+link(type='text/css',href='../Common/web/css/mian.css',rel='stylesheet')
+link(rel='stylesheet', type='text/css', href='../javascripts/UI/Scripts/media/css/style.css')
+link(type='text/css',href='../MAPConfig/web/css/MAPConfig.css',rel='stylesheet')
+.title#title(style='text-align: center;font-family: "Microsoft YaHei";font-size:26px') 标题
+.leftvessel
+    .addworkshop
+        p.operation 
+        .operationtitle 添加车间 
+        span#iconSign  新增
+            i.icon-plus-sign 
+        span#iconEdit 编辑
+            i.icon-edit
+        span#iconRemove 删除
+            i.icon-remove-sign
+        //- div.newtoolshop.activenewtoolshop#newtoolshop0 新车间
+    .addfacility
+        p.operation 
+        .operationtitle 添加设备
+        .clearfix
+            span(style='float:right;margin-right:15px',onclick='addFacilitySign.click()')  新增
+                i.icon-plus-sign
+        input#addFacilitySign(type="file", name="",style='display:none;', accept="image/*")
+    .addwire
+        button.operationtitle#addwireiconSign 添加线别
+        div
+            select#addwireSizeSelect(style='width:100%;margin-top:10px')
+                option(value ="10") 10
+                option(value ="12") 12
+                option(value ="14") 14
+                option(value ="16" selected = "selected") 16
+                option(value ="18") 18
+                option(value ="20") 20
+                option(value ="22") 22
+                option(value ="24") 24
+                option(value ="26") 26
+                option(value ="28") 28
+                option(value ="30") 30
+                option(value ="32") 32
+                option(value ="34") 34
+            span 字体颜色   
+            input#addwireColorSelect(type="color",value='#000000')
+        div 
+            span 背景颜色   
+            input#addwireBackgroundSelect(type="color",value='#ffffff')
+    div
+        button#saveBtn.btn.blue 保存
+.mediatevessel#mediatevessel
+    //- #mediatevessel0.configXinxi
+.rightvessel 
+    div 属性
+    div 页面配置
+        //- div 
+        //-     span 页面名称 
+        //-     input#pageName 
+        div 
+            span 宽
+            input#pageWidth(value='1024',readonly) 
+        div 
+            span 高
+            input#pageHeight(value='1000')
+        div 
+            span 背景颜色(背景图片和颜色只有一个生效)
+            input#pageColor(type='color' value='#ffffff')
+        div 
+            span 背景图片
+            input#pageFile(type='file', accept="image/*")
+    div 元素属性
+        div 
+            span 绑定设备
+            input#bindFacility
+            span(style='margin-bottom:5px') 选择设备
+            input#MAC_NBRname
+        div 
+            span x
+            input#coordinateX
+        div 
+            span y
+            input#coordinateY
+        div 
+            span 宽度
+            input#coordinateWidth
+        div 
+            span 高度
+            input#coordinateHeight
+        div 
+            span 锁定纵横比
+            input(type='checkbox',style='position:relative;top:-2px;left:3px',checked)#lockCheckbox
+    div 标题配置
+        div 
+            span 标题名称 
+            input#captionTitle(value='标题') 
+        div 
+            span 大小
+            select#captionTitleSelect(value="26")
+                option(value ="10") 10
+                option(value ="12") 12
+                option(value ="14") 14
+                option(value ="16") 16
+                option(value ="18") 18
+                option(value ="20") 20
+                option(value ="22") 22
+                option(value ="24") 24
+                option(value ="26" selected = "selected") 26
+                option(value ="28") 28
+                option(value ="30") 30
+                option(value ="32") 32
+                option(value ="34") 34
+            span 字体
+            select#captionFontSelect
+                option(value ="Microsoft YaHei") 微软雅黑
+                option(value ="SimSun") 宋体
+                option(value ="SimHei") 黑体	
+                option(value ="Microsoft JhengHei") 微软正黑体	
+                option(value ="KaiTi") 楷体
+                option(value ="FangSong") 仿宋
+                option(value ="MingLiU") 细明体
+                option(value ="PMingLiU") 新细明体
+                option(value ="NSimSun") 新宋体
+                option(value ="DFKai-SB") 标楷体
+        div 
+            span 居中方式
+           select#captionCenterSelect
+                option(value ="center") 居中
+                option(value ="left") 左对齐
+                option(value ="right") 右对齐
+        div 
+            span 颜色
+            input#captionColor(type='color')
+    div 灯配置
+        div
+            span 灯X
+            input#lightX(value='0')
+        div
+            span 灯Y
+            input#lightY(value='0')
+        div
+            span 灯宽
+            input#lightWidth(value='16')
+        div
+            span 灯高
+            input#lightHeight(value='20')
+        div
+            span 圆角大小
+            input#lightBorder(value='8')
+    div 字体配置
+        div 
+            span 字体X
+            input#lightFontX(value='0')
+        div 
+            span 字体Y
+            input#lightFonty(value='0')
+        div 
+            span 颜色
+            input#lightFontColoe(value='#000',type='color')
+        div
+            span 字体大小
+            select(value="26")#lightFontsIZE
+                option(value ="10") 10
+                option(value ="12") 12
+                option(value ="14") 14
+                option(value ="16" selected = "selected") 16
+                option(value ="18") 18
+                option(value ="20") 20
+                option(value ="22") 22
+                option(value ="24") 24
+                option(value ="26" ) 26
+                option(value ="28") 28
+                option(value ="30") 30
+                option(value ="32") 32
+                option(value ="34") 34
+        div
+            span 字体
+            select#lightFontFamily
+                option(value ="Microsoft YaHei") 微软雅黑
+                option(value ="SimSun") 宋体
+                option(value ="SimHei") 黑体
+                option(value ="Microsoft JhengHei") 微软正黑体
+                option(value ="KaiTi") 楷体
+                option(value ="FangSong") 仿宋
+                option(value ="MingLiU") 细明体
+                option(value ="PMingLiU") 新细明体
+                option(value ="NSimSun") 新宋体
+                option(value ="DFKai-SB") 标楷体
+script.
+    var lang = !{JSON.stringify(lang)};
+script(type='text/javascript', src='../javascripts/UI/Scripts/jquery-1.10.2.min.js')
+script(type='text/javascript', src='./dist/all.min.js')
+script(type='text/javascript', src='./javascripts/UI/Scripts/media/js/app.js')
+script(type='text/javascript', src='./javascripts/UI/Scripts/Bandex.js')
+script(type='text/javascript',src='../MAPConfig/web/javascript/jquery.actual.js')
+script(type='text/javascript',src='../MAPConfig/web/javascript/control.js')
+script(type='text/javascript',src='../MAPConfig/web/javascript/wireContorl.js')
+script(type='text/javascript',src='../MAPConfig/web/controller/MAPController.js')
+script#treeview-template(type='text/kendo-ui-template').
+    <i class="#:item.icon#"></i>
+    <span nodeid="#:item.id#" pid="#:item.PID#" attr="#:item.attribute#"  onclick='addOnClick(this)' level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>

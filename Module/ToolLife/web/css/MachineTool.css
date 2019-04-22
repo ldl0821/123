@@ -1,0 +1,42 @@
+.span {
+    float: left !important;
+    margin-left: 0px !important;
+    width: 300px !important;
+}
+
+.BZcontrols {
+    margin-left: 130px;
+}
+
+.BZcontrols>.radio,
+.BZcontrols>.checkbox {
+    display: inline-block;
+    margin: 8px 15px 0 0 !important;
+    padding: 0 !important;
+}
+
+.k-button-icontext {
+    line-height: 26px;
+}
+
+.k-window {
+    top: 170px !important;
+}
+
+#statusDiv label{
+    float: left;
+    margin-top: 7px;
+    margin-right: 15px;
+    font-size: 15px;
+}
+
+#statusDiv input{
+    width: 20px;
+    height: 16px;
+    margin-top: 10px;
+    float: left;
+}
+
+.hiddenDom{
+    display: none;
+}

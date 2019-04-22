@@ -1,0 +1,37 @@
+link(rel='stylesheet', type='text/css', href='../javascripts/UI/Scripts/media/css/bootstrap.min.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/font-awesome.min.css')  
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/style-metro.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/style.css')  
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/alertify/alertify.core.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/alertify/alertify.default.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/Content/kendo/2014.1.318/kendo.common.min.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/Content/kendo/2014.1.318/kendo.default.min.css')
+link(rel='stylesheet', type='text/css', href='./javascripts/Content/Bandex.css')
+link(type='text/css',href='../Common/web/css/mian.css',rel='stylesheet')
+link(rel='stylesheet', type='text/css', href='../javascripts/UI/Scripts/media/css/style.css')
+link(type='text/css',href='../MAP/web/css/MAP.css',rel='stylesheet')
+.title
+.Status(ng-app='Map',ng-controller='MapCtrl')
+    table.table(ng-show='status.length > 0')
+        tr
+            td(style='display:flex')
+                .span25.responsive(ng-repeat='item in status' style='float:left;margin-left:10px;flex:1')
+                    .dashboard-stat.black(ng-style="{'background-color':item.color}")
+                        .visual
+                            div(style='width:14px;height:14px')
+                            .desc {{item.name}}
+                        .details
+                            .number
+                                | {{item.MacCount}}
+                        .statusDetial(style='height: 50px; position: absolute;')
+div.excquit #{lang.MAP.Exit}
+#container(style='width:100%;height: calc(100% - 170px);position:fixed;bottom:0;')
+script.
+    var lang = !{JSON.stringify(lang)};
+script(type='text/javascript', src='../javascripts/UI/Scripts/jquery-1.10.2.min.js')
+script(type='text/javascript', src='./dist/all.min.js')
+script(type='text/javascript', src='./javascripts/UI/Scripts/media/js/app.js')
+script(type='text/javascript', src='./javascripts/UI/Scripts/Bandex.js')
+script(type='text/javascript', src='../javascripts/Angular/angular.min.js')
+script(type='text/javascript',src='../MAP/web/controller/MAP_angular.js')
+script(type='text/javascript',src='../MAP/web/controller/MAPController.js')

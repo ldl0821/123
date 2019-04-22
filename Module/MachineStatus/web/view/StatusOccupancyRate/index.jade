@@ -1,0 +1,121 @@
+extends ../../../../../views/layout
+block append headcss
+  link(type='text/css',href='./MachineStatus/web/css/statusrate.css',rel='stylesheet')
+  link(type='text/css',href='./MachineStatus/web/css/jcallout.css',rel='stylesheet')
+  style(type='text/css').
+    .span {
+    float: left !important;
+    margin-left: 0px !important;
+    width: 300px !important;
+    }
+    .BZcontrols {
+    margin-left: 130px;
+    }
+    .BZcontrols > .radio, .BZcontrols > .checkbox {
+    display: inline-block;
+    margin: 8px 15px 0 0 !important;
+    padding: 0 !important;
+    }
+    .pie {
+    width: 450px !important;
+    height: 400px;
+    float: left;
+    border-top: 1px dashed #cecece;
+    }
+    .hischart {
+    width: 650px !important;
+    height: 500px;
+    border-top: 1px dashed #cecece;
+    }
+    .statusdetail {
+    margin-right: 2px !important;
+    margin-top: -3px !important;
+    display: inline;
+    }
+    #statusdetail > div {
+    display: inline;
+    margin-left: 20px;
+    }
+block append headjavascript
+  script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+  script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts-3d.js')
+  script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+  script(type='text/javascript',src='./javascripts/UI/Scripts/jcallout.js')
+  script(type='text/javascript',src='./MachineStatus/web/controller/occupancyController.js')
+
+block content
+  .row-fluid
+    .span12
+      h3.page-title(data-lang='AccountManage')
+        | #{lang.StatusOccupancyRate.StatusOccupancyRate}
+      ul.breadcrumb
+        li
+          i.icon-home
+          a(href='/') #{lang.EmployeePerformance.Home}
+          i.icon-angle-right
+        li
+          a(href='javascript:;', data-lang='System') #{lang.StatusOccupancyRate.MachineState}
+          i.icon-angle-right
+        li
+          a(href='javascript:;', data-lang='MachineScheduling') #{lang.StatusOccupancyRate.StatusOccupancyRate}
+    
+  form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+    .row-fluid
+      .span
+        .control-group(style='margin-bottom: 5px;')
+          label.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.startTime}
+          .BZcontrols
+            input#startTime.m-wrap(type='text', name='startTime')
+      .span
+        .control-group(style='margin-bottom: 5px;')
+          label.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.endTime}
+          .BZcontrols
+            input#endTime.m-wrap(type='text', name='endTime')
+      .span
+        .control-group(style='margin-bottom: 5px;')
+          label.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.stateDetail}
+          .BZcontrols(style='line-height: 32px;')
+            label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
+              input(type='checkbox', name='detailshow')
+            | #{lang.MachineStatus.ISPIECHART}
+            label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
+              input(type='checkbox', name='pieshow')
+    .row-fluid
+      .span
+        .control-group(style='margin-bottom: 5px;')
+          label.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.QUERY_TYPE}
+          .BZcontrols(style='line-height: 32px;')
+            label.radio(style='margin-top: 0px !important;font-size: 12px;')
+              input(type='radio', name='searchType', checked='', value='1')
+              | #{lang.MachineStatus.DEVICE}
+            label.radio(style='margin-top: 0px !important;font-size: 12px;')
+              input(type='radio', name='searchType', value='2')
+              | #{lang.MachineStatus.DEVICE_GROUP}
+      .span
+        .control-group(style='margin-bottom: 5px;')
+          label.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.SUMMY_WAY}
+          .BZcontrols
+            input#totalType.m-wrap(type='text', name='totalType')
+      div(style='float: left;margin-left:0px;width:350px;')
+        .control-group(style='margin-bottom: 5px;')
+          label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.DEVICE}
+          .BZcontrols
+            input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
+      .span
+      .control-group(style='margin-bottom: 5px;')
+        #search.btn.green(style='margin-left: 50px;')
+          | #{lang.MachineStatus.QUERY}
+          i.icon-search
+  .row-fluid1.inbox
+    div
+      ul.grouptype.inbox-nav.margin-bottom-10(style='position: absolute;right: 20px;margin-top: 20px;')
+        li.active
+          a.btn(data-title='1', href='javascript:;') #{lang.EmployeePerformance.Equipment}
+          b
+        li
+          a.btn(data-title='2', href='javascript:;') #{lang.Maintain.Time}
+          b
+    div
+  #hisChart(style='min-width: 700px; display: none; margin-top: 50px;')
+  #pie(style='min-width: 700px; display: none; margin-top: 5px;')
+
